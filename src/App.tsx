@@ -1,10 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import MainContent from './Screens/MainContent'
+import MainContent from './Screens/MainContent';
+
 const AppContent = () => {
-  return (
-    <MainContent/>
-  );
+  return <MainContent />;
 };
 
 export default function App() {

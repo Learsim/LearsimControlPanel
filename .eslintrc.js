@@ -3,6 +3,24 @@ module.exports = {
   rules: {
     // A temporary hack related to IDE not resolving correct package.json
     'import/no-extraneous-dependencies': 'off',
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
+    '@typescript-eslint/no-empty-interface': [
+      'error',
+      {
+        allowSingleExtends: true,
+      },
+    ],
+    'jsx-a11y/no-static-element-interactions': [
+      'error',
+      {
+        handlers: [''],
+      },
+    ],
   },
   parserOptions: {
     ecmaVersion: 2020,

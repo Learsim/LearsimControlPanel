@@ -1,6 +1,8 @@
-export enum ScreenNames{
+enum ScreenNames {
   dashboard,
   clients,
   settings,
-  client
+  client,
+  newClient,
 }
+export default ScreenNames;
