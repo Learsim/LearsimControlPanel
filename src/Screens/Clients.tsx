@@ -62,7 +62,7 @@ export default class Clients extends React.Component<
           aria-hidden="true"
         >
           <FAB
-            className="w-12 h-12 fixed bottom-10 right-10 bg-green-400 text-white z-10 shadow rounded-full flex flex-row justify-center items-center cursor-pointer hover:bg-green-500 hover:shadow-xl transition-all duration-200"
+            className="w-12 h-12 fixed bottom-10 right-10 bg-green-400 text-white shadow rounded-full flex flex-row justify-center items-center cursor-pointer hover:bg-green-500 hover:shadow-xl transition-all duration-200"
             Icon={fabIcon}
           />
         </div>
