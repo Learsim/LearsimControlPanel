@@ -1,17 +1,20 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable @typescript-eslint/no-empty-interface */
 
 import * as React from 'react';
-import Client from '../Components/Client';
+import { Client } from '../API/Clients';
+import ClientComponent from '../Components/Client';
 import FAB from '../Components/fab';
 import ScreenNames from '../Helpers/enums';
 
 export interface IClientsProps {
   NavigationManager: (target: ScreenNames) => void;
+  Clients: Client[];
 }
 
 export interface IClientsState {}
 
-export default class Clients extends React.Component<
+export default class ClientsScreen extends React.Component<
   IClientsProps,
   IClientsState
 > {
@@ -28,6 +31,7 @@ export default class Clients extends React.Component<
   }
 
   public render() {
+    const { Clients } = this.props;
     const fabIcon = (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -44,17 +48,6 @@ export default class Clients extends React.Component<
         />
       </svg>
     );
-    const ClientsElement: JSX.Element[] = [];
-    for (let i = 0; i < Math.floor(Math.random() * 1000); i += 1) {
-      ClientsElement.push(
-        <div
-          onClick={() => this.NavigateToClient(ScreenNames.client)}
-          aria-hidden="true"
-        >
-          <Client />
-        </div>
-      );
-    }
     return (
       <div>
         <div
@@ -67,7 +60,16 @@ export default class Clients extends React.Component<
           />
         </div>
         <div className=" w-full p-8 flex-row flex flex-wrap justify-evenly ">
-          {ClientsElement}
+          {Clients.length > 0
+            ? Clients.map((client) => (
+                <ClientComponent
+                  Name={client.Config.Name}
+                  Online={client.IsOpen}
+                  Adress={client.Config.Adress}
+                  Description={client.Config.Description}
+                />
+              ))
+            : 'No Clients'}
         </div>
       </div>
     );

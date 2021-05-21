@@ -8,11 +8,14 @@ export interface ViewPort {
   latitude: number;
   zoom: number;
 }
-export interface IMapProps {}
+export interface IMapProps {
+  Lat: number;
+  Lon: number;
+  Direction: number;
+}
 export interface IMapState {
   lat: number;
   lon: number;
-  direction: number;
   connected: boolean;
   lockedon: boolean;
   viewport: ViewPort;
@@ -25,7 +28,6 @@ class Map extends React.Component<IMapProps, IMapState> {
     this.state = {
       lat: 60,
       lon: 14,
-      direction: 0,
       connected: false,
       viewport: {
         longitude: 14,
@@ -57,7 +59,8 @@ class Map extends React.Component<IMapProps, IMapState> {
   }
 
   render() {
-    const { viewport, lockedon, lat, lon, connected, direction } = this.state;
+    const { viewport, lockedon, lat, lon, connected } = this.state;
+    const { Lat, Lon, Direction } = this.props;
     return (
       <>
         <ReactMapGL
@@ -70,13 +73,13 @@ class Map extends React.Component<IMapProps, IMapState> {
           onViewportChange={this.updateViewPort}
           mapboxApiAccessToken="pk.eyJ1IjoiYXhkcmEiLCJhIjoiY2tuMml3YXhzMGxoMzJub3U3M2E5ZWNiMiJ9.q2lb2ipatPphwA8piWyC1w"
         >
-          <Marker latitude={lat} longitude={lon}>
+          <Marker latitude={Lat} longitude={Lon}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
               height="24"
               width="24"
-              transform={`rotate(${direction * (180 / Math.PI)} 0 0 )`}
+              transform={`rotate(${Direction * (180 / Math.PI)} 0 0 )`}
             >
               <path
                 className={
