@@ -110,11 +110,11 @@ export default class Settings extends React.Component<
     return (
       <div>
         <div
-          className={`fixed bottom-14 right-14 h-24 w-64 bg-white rounded-lg transition-all duration-700 shadow-2xl border-2 border-gray-50 flex flex-col items-center justify-around ${
+          className={`fixed bottom-14 right-14 h-24 w-64 bg-white rounded-lg transition-all duration-700 shadow-2xl border-2 border-gray-50 flex flex-col items-center justify-around  ${
             savedSettings ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          <div className="text-green-500 text-xl">Saved Settings!</div>
+          <div className="text-green-500 text-xl ">Saved Settings!</div>
         </div>
         <div className="flex flex-col justify-between h-full">
           <div>
@@ -122,7 +122,7 @@ export default class Settings extends React.Component<
               <p className="text-sm text-gray-800">Host IP</p>
 
               <input
-                className={`px-4 py-2 bg-gray-100 border-gray-300 border-2 rounded-md ${
+                className={`px-4 py-2 bg-gray-100 border-gray-300 border-2 rounded-md   ${
                   hostError ? 'border-red-500' : ''
                 }`}
                 value={host}
@@ -146,7 +146,7 @@ export default class Settings extends React.Component<
           <div>
             <div className="flex flex-row justify-end ">
               <div
-                className="mx-2 px-4 py-2 rounded-md shadow-md cursor-pointer text-white bg-red-500 select-none"
+                className="mx-2 px-4 py-2 rounded-md  shadow-md cursor-pointer text-white bg-red-500 select-none"
                 onClick={this.cancelSettings}
                 aria-hidden="true"
               >

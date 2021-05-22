@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import MainContent from './Screens/MainContent';
+import './App.global.css';
 
 const AppContent = () => {
   return <MainContent />;

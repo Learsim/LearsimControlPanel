@@ -250,6 +250,8 @@
   },
   "dependencies": {
     "@types/axios": "^0.14.0",
+    "@types/react-syntax-highlighter": "^13.5.0",
+    "@types/uuid": "^8.3.0",
     "autoprefixer": "^10.2.5",
     "axios": "^0.21.1",
     "electron-debug": "^3.1.0",
@@ -261,9 +263,11 @@
     "react-dom": "^17.0.1",
     "react-map-gl": "^6.1.15",
     "react-router-dom": "^5.2.0",
+    "react-syntax-highlighter": "^15.4.3",
     "regenerator-runtime": "^0.13.5",
     "source-map-support": "^0.5.19",
-    "tailwindcss": "^2.1.2"
+    "tailwindcss": "^2.1.2",
+    "uuid": "^8.3.2"
   },
   "devEngines": {
     "node": ">=10.x",

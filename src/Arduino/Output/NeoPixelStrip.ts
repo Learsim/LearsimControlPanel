@@ -1,11 +1,4 @@
-import ArduinoComponent from '../Arduino.Common';
+import ArduinoComponent from '../ArduinoComponent';
 import NeoPixel from './NeoPixel';
 
-export default class NeoPixelStrip extends ArduinoComponent {
-  NeoPixels: NeoPixel[];
-
-  constructor(NeoPixels: NeoPixel[]) {
-    super();
-    this.NeoPixels = NeoPixels;
-  }
-}
+export default class NeoPixelStrip extends ArduinoComponent {}

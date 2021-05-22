@@ -4,5 +4,6 @@ enum ScreenNames {
   settings,
   client,
   newClient,
+  values,
 }
 export default ScreenNames;

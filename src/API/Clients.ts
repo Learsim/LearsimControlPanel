@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Arduino from '../Arduino/Arduino.Common';
 import { clientsEndpoint } from './API.Common';
 
 export interface Client {
@@ -29,6 +30,14 @@ export interface SimVar {
 }
 
 export default function getClients(hostname: string): Promise<Client[]> {
+  return axios.get<Client[]>(hostname.concat(clientsEndpoint)).then((res) => {
+    return res.data;
+  });
+}
+export function AddClient(
+  hostname: string,
+  arduino: Arduino
+): Promise<Client[]> {
   return axios.get<Client[]>(hostname.concat(clientsEndpoint)).then((res) => {
     return res.data;
   });

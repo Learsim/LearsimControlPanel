@@ -12,6 +12,7 @@ import ClientScreen from './ClientScreen';
 import Dashboard from './Dashboard';
 import NewClientScreen from './NewClientScreen';
 import SettingScreen from './SettingsScreen';
+import ValueScreen from './ValueScreen';
 
 export interface IMainContentProps {}
 export interface IMainContentStates {
@@ -55,11 +56,11 @@ class MainContent extends React.Component<
         console.log('Could not reach API');
         this.setState({ SimStatus: false });
       });
-    await new Promise((resolve) => setTimeout(resolve, 200));
+    // await new Promise((resolve) => setTimeout(resolve, 200));
     getClients(URL)
       .then((res) => this.setState({ Clients: res }))
       .catch((res) => console.log('Could not reach API'));
-    await new Promise((resolve) => setTimeout(resolve, 200));
+    // await new Promise((resolve) => setTimeout(resolve, 200));
     getSimVarValues(URL)
       .then((res) => this.setState({ SimVars: res }))
       .catch((res) => console.log('Could not reach API'));
@@ -98,6 +99,9 @@ class MainContent extends React.Component<
         break;
       case 4:
         Content = <NewClientScreen />;
+        break;
+      case 5:
+        Content = <ValueScreen SimVars={SimVars} />;
         break;
       default:
         Content = (

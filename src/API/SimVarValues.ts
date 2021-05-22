@@ -2,10 +2,10 @@ import axios from 'axios';
 import { valuesEndpoint } from './API.Common';
 
 export interface SimVarValue {
-  Key: Key;
+  Key: SimVar;
   Value: string;
 }
-export interface Key {
+export interface SimVar {
   Identfier: string;
   Index: number;
 }

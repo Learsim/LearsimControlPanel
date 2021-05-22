@@ -68,6 +68,15 @@ class SideMenu extends React.Component<
               >
                 Settings
               </div>
+              <div
+                className={`w-full h-12 text-lg hover:bg-gray-200 flex items-center cursor-pointer px-8 my-2 ${
+                  CurrentScreen === ScreenNames.values ? 'bg-gray-100' : ''
+                }`}
+                onClick={() => this.navigateTo(ScreenNames.values)}
+                aria-hidden="true"
+              >
+                Values
+              </div>
             </div>
             <div
               className={` transition-all flex flex-col items-end px-2 ${
