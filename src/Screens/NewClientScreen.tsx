@@ -26,6 +26,7 @@ export interface INewComponentState {
 }
 export interface INewClientScreenState {
   arduino: Arduino;
+  ShowNewComponentModal: boolean;
   ShowComponentModal: boolean;
   SimVars: string[];
   NewComponent: INewComponentState;
@@ -44,6 +45,7 @@ export default class NewClientScreen extends React.Component<
 
     this.state = {
       arduino: new Arduino(),
+      ShowNewComponentModal: false,
       ShowComponentModal: false,
       SimVars: [],
       NewComponent: {
@@ -57,6 +59,7 @@ export default class NewClientScreen extends React.Component<
     };
     this.addNewComponent = this.addNewComponent.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.saveEditingComponent = this.saveEditingComponent.bind(this);
   }
 
   componentDidMount() {
@@ -149,7 +152,7 @@ export default class NewClientScreen extends React.Component<
     tempArduino.Components.push(component);
     this.setState({
       arduino: tempArduino,
-      ShowComponentModal: false,
+      ShowNewComponentModal: false,
       ArudinoCode: GenerateArduinoCode(tempArduino),
       NewComponent: {
         io: 'Output',
@@ -160,6 +163,8 @@ export default class NewClientScreen extends React.Component<
       },
     });
   }
+
+  saveEditingComponent() {}
 
   public render() {
     const fabIcon = (
@@ -180,11 +185,12 @@ export default class NewClientScreen extends React.Component<
     );
 
     const {
-      ShowComponentModal,
+      ShowNewComponentModal,
       SimVars,
       arduino,
       NewComponent,
       ArudinoCode,
+      ShowComponentModal,
     } = this.state;
 
     return (
@@ -200,7 +206,13 @@ export default class NewClientScreen extends React.Component<
               <div className="flex-grow h-full overflow-auto mt-2">
                 <div className="flex flex-wrap font-mono ">
                   {arduino.Components.map((component) => (
-                    <div className="w-72  h-24 rounded-md border-gray-200 shadow-sm hover:shadow-lg transition-shadow duration-150 border-2 m-2 cursor-pointer text-center p-2 flex-grow">
+                    <div
+                      className="w-72  h-24 rounded-md border-gray-200 shadow-sm hover:shadow-lg transition-shadow duration-150 border-2 m-2 cursor-pointer text-center p-2 flex-grow"
+                      onClick={() =>
+                        this.setState({ ShowComponentModal: true })
+                      }
+                      aria-hidden="true"
+                    >
                       <div className="font-bold text-lg">
                         {component.SimVar.Identfier}
                       </div>
@@ -213,7 +225,7 @@ export default class NewClientScreen extends React.Component<
             </div>
             <div>
               <div
-                onClick={() => this.setState({ ShowComponentModal: true })}
+                onClick={() => this.setState({ ShowNewComponentModal: true })}
                 aria-hidden="true"
               >
                 <FAB
@@ -235,12 +247,15 @@ export default class NewClientScreen extends React.Component<
         <div>
           <div
             className={`h-screen w-screen bg-black top-0  fixed z-0 transition-opacity duration-200  cursor-pointer ${
-              ShowComponentModal
+              ShowNewComponentModal || ShowComponentModal
                 ? 'duration-150 opacity-50'
                 : ' duration-0  opacity-0 pointer-events-none'
             }`}
             onClick={() =>
-              this.setState({ ShowComponentModal: !ShowComponentModal })
+              this.setState({
+                ShowNewComponentModal: false,
+                ShowComponentModal: false,
+              })
             }
             aria-hidden="true"
           />
@@ -254,6 +269,43 @@ export default class NewClientScreen extends React.Component<
             <div
               className={`bg-white w-72 rounded-lg p-8 text-lg font-bold uppercase font-mono shadow-lg hover:shadow-2xl transition-all pointer-events-auto ${
                 ShowComponentModal
+                  ? 'duration-150 opacity-100'
+                  : ' duration-0  opacity-0 pointer-events-none'
+              }`}
+            >
+              Edit component
+              <div className="mt-2 grid grid-cols-2 justify-items-stretch gap-4">
+                <button
+                  type="button"
+                  className="rounded py-1 px-2 bg-red-400 text-white "
+                  onClick={() =>
+                    this.setState({
+                      ShowComponentModal: !ShowComponentModal,
+                    })
+                  }
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="rounded py-1 px-2 bg-green-400 text-white"
+                  onClick={this.saveEditingComponent}
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            className={`fixed top-1/4 right-0 flex  w-screen justify-evenly pointer-events-none ${
+              ShowNewComponentModal
+                ? 'duration-150 opacity-100'
+                : ' duration-0  opacity-0 pointer-events-none'
+            }`}
+          >
+            <div
+              className={`bg-white w-72 rounded-lg p-8 text-lg font-bold uppercase font-mono shadow-lg hover:shadow-2xl transition-all pointer-events-auto ${
+                ShowNewComponentModal
                   ? 'duration-150 opacity-100'
                   : ' duration-0  opacity-0 pointer-events-none'
               }`}
@@ -319,7 +371,9 @@ export default class NewClientScreen extends React.Component<
                   type="button"
                   className="rounded py-1 px-2 bg-red-400 text-white "
                   onClick={() =>
-                    this.setState({ ShowComponentModal: !ShowComponentModal })
+                    this.setState({
+                      ShowNewComponentModal: !ShowNewComponentModal,
+                    })
                   }
                 >
                   Cancel
