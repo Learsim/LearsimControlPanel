@@ -8,7 +8,12 @@ import { IsDarkMode } from './Helpers/helpers';
 
 const AppContent = () => {
   const [DarkMode, setDarkMode] = useState(false);
-  const DarkModeTime = setInterval(() => setDarkMode(IsDarkMode()), 15000);
+  const [GotDarkMode, setGotDarkMode] = useState(false);
+  if (!GotDarkMode) {
+    setDarkMode(IsDarkMode());
+    setGotDarkMode(true);
+  }
+  setInterval(() => setDarkMode(IsDarkMode()), 15000);
   return <MainContent IsDarkMode={DarkMode} />;
 };
 

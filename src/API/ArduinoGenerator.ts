@@ -6,34 +6,24 @@ import Display from '../Arduino/Output/Display';
 import Led from '../Arduino/Output/Led';
 import NeoPixelStrip from '../Arduino/Output/NeoPixelStrip';
 
-const BaseCode = `
-{CR}
-
-#include "Learsim.h"
+const BaseCode = `{CR}#include "Learsim.h"
 #include <ArduinoJson.h>
 {INCLUDES}
 {INIT}
 MessangeHandler msghndlr;
 void setup()
-{
-{SETUP}
+{{SETUP}
   msghndlr.Init(2048);
   Serial.begin(9600);
 }
 void loop()
-{
-  {LOOP}
-  if (Serial.available())
+{{LOOP}if (Serial.available())
     {
       if (msghndlr.DeserializeJson())
-      {
-        {DESJSON}         
-      }
+      {{DESJSON}}
     }
 }
-
 {CUSTOMFUNCS}
-
 `;
 export default function GenerateArduinoCode(arduino: Arduino): string {
   let Leds: Led[] = [];
