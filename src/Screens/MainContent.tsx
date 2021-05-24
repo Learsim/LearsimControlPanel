@@ -4,6 +4,7 @@ import React from 'react';
 import getClients, { Client } from '../API/Clients';
 import getSimVarValues, { SimVarValue } from '../API/SimVarValues';
 import getStatus from '../API/Status';
+import NewSideMenu from '../Components/NewSideMenu';
 import SideMenu from '../Components/SideMenu';
 import SimStatusIcon from '../Components/SimStatusIcon';
 import ScreenNames from '../Helpers/enums';
@@ -22,6 +23,7 @@ export interface IMainContentStates {
   SimStatus: boolean;
   Clients: Client[];
   SimVars: SimVarValue[];
+  SideMenuExtended: boolean;
 }
 class MainContent extends React.Component<
   IMainContentProps,
@@ -36,6 +38,7 @@ class MainContent extends React.Component<
       SimStatus: false,
       Clients: [],
       SimVars: [],
+      SideMenuExtended: false,
     };
     this.NavigationManager = this.NavigationManager.bind(this);
   }
@@ -75,7 +78,13 @@ class MainContent extends React.Component<
   render() {
     const { IsDarkMode } = this.props;
 
-    const { CurrentScreen, SimStatus, Clients, SimVars } = this.state;
+    const {
+      CurrentScreen,
+      SimStatus,
+      Clients,
+      SimVars,
+      SideMenuExtended,
+    } = this.state;
     let Content: JSX.Element = <></>;
     switch (CurrentScreen) {
       case 0:
@@ -129,20 +138,54 @@ class MainContent extends React.Component<
             }`}
           >
             {' '}
-            {Content}
+            <div className="flex flex-row h-full w-screen">
+              <NewSideMenu
+                IsDarkMode={IsDarkMode}
+                IsExpanded={SideMenuExtended}
+                NavigationManager={this.NavigationManager}
+                CurrentScreen={CurrentScreen}
+              />
+              <div className="flex-grow">{Content}</div>
+            </div>
           </div>
         </div>
         <div
           id="topBar"
           className={`w-screen h-20 shadow-lg fixed  transition-colors duration-300  ${
             IsDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'
-          }  top-0 flex flex-row  justify-between px-4`}
+          }  top-0 flex flex-row  justify-between px-3`}
         >
-          <SideMenu
+          {/* <SideMenu
             NavigationManager={this.NavigationManager}
             CurrentScreen={CurrentScreen}
             IsDarkMode={IsDarkMode}
-          />
+          /> */}
+          <div className="h-full flex items-center ">
+            <div
+              className="cursor-pointer"
+              onClick={() =>
+                this.setState({
+                  SideMenuExtended: !SideMenuExtended,
+                })
+              }
+              aria-hidden="true"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-10 w-10 text-gray-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </div>
+          </div>
           <div className="items-center flex-row flex">
             <div className="text-2xl font-bold text-center">
               {ScreenNames[CurrentScreen].charAt(0).toUpperCase() +
