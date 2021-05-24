@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable promise/catch-or-return */
 /* eslint-disable promise/always-return */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/jsx-key */
@@ -5,6 +8,7 @@
 import * as React from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import dark from 'react-syntax-highlighter/dist/esm/styles/hljs/dark';
+import light from 'react-syntax-highlighter/dist/esm/styles/hljs/arduino-light';
 import GenerateArduinoCode from '../API/ArduinoGenerator';
 import getSimVars from '../API/SimVariables';
 import Arduino from '../Arduino/Arduino.Common';
@@ -14,8 +18,11 @@ import Display from '../Arduino/Output/Display';
 import Led from '../Arduino/Output/Led';
 import NeoPixelStrip from '../Arduino/Output/NeoPixelStrip';
 import FAB from '../Components/fab';
+import OpenURL from '../Helpers/helpers';
 
-export interface INewClientScreenProps {}
+export interface INewClientScreenProps {
+  IsDarkMode: boolean;
+}
 
 export interface INewComponentState {
   io: string;
@@ -23,6 +30,7 @@ export interface INewComponentState {
   SimVar: string;
   Pin: number;
   Index: number;
+  ValueType: string;
 }
 export interface INewClientScreenState {
   arduino: Arduino;
@@ -54,6 +62,7 @@ export default class NewClientScreen extends React.Component<
         SimVar: '',
         Index: 0,
         Pin: 2,
+        ValueType: 'bool',
       },
       ArudinoCode: '',
     };
@@ -99,6 +108,10 @@ export default class NewClientScreen extends React.Component<
         break;
       case 'pin':
         tempComponent.Pin = Event.target.value;
+
+        break;
+      case 'valuetype':
+        tempComponent.ValueType = Event.target.value;
 
         break;
 
@@ -160,6 +173,7 @@ export default class NewClientScreen extends React.Component<
         SimVar: '',
         Index: 0,
         Pin: 2,
+        ValueType: 'bool',
       },
     });
   }
@@ -192,7 +206,7 @@ export default class NewClientScreen extends React.Component<
       ArudinoCode,
       ShowComponentModal,
     } = this.state;
-
+    const { IsDarkMode } = this.props;
     return (
       <div className="h-full">
         <div className="grid grid-cols-2 h-full">
@@ -229,7 +243,7 @@ export default class NewClientScreen extends React.Component<
                 aria-hidden="true"
               >
                 <FAB
-                  className="w-12 h-12 fixed bottom-10 right-1/2 mr-10 bg-green-400 text-white shadow rounded-full flex flex-row justify-center items-center cursor-pointer hover:bg-green-500 hover:shadow-xl transition-all duration-200"
+                  className="w-12 h-12 fixed bottom-10 right-1/2 mr-10 bg-green-400  text-white shadow rounded-full flex flex-row justify-center items-center cursor-pointer hover:bg-green-500 hover:shadow-xl transition-all duration-200"
                   Icon={fabIcon}
                 />
               </div>
@@ -237,9 +251,14 @@ export default class NewClientScreen extends React.Component<
           </div>
           <div
             className="select-text  overflow-auto shadow-xl"
-            style={{ background: 'rgb(68, 68, 68)' }}
+            style={{
+              background: IsDarkMode ? 'rgb(68, 68, 68)' : 'white',
+              borderLeft: IsDarkMode ? '0' : '2px',
+              borderColor: IsDarkMode ? 'transparent' : '#EDEDED',
+              borderStyle: IsDarkMode ? 'none' : 'solid',
+            }}
           >
-            <SyntaxHighlighter language="cpp" style={dark}>
+            <SyntaxHighlighter language="cpp" style={IsDarkMode ? dark : light}>
               {ArudinoCode}
             </SyntaxHighlighter>
           </div>
@@ -267,7 +286,9 @@ export default class NewClientScreen extends React.Component<
             }`}
           >
             <div
-              className={`bg-white w-72 rounded-lg p-8 text-lg font-bold uppercase font-mono shadow-lg hover:shadow-2xl transition-all pointer-events-auto ${
+              className={`${
+                IsDarkMode ? 'bg-gray-800' : 'bg-white'
+              } w-72 rounded-lg p-8 text-lg font-bold  uppercase font-mono shadow-lg hover:shadow-2xl transition-all pointer-events-auto ${
                 ShowComponentModal
                   ? 'duration-150 opacity-100'
                   : ' duration-0  opacity-0 pointer-events-none'
@@ -297,16 +318,18 @@ export default class NewClientScreen extends React.Component<
             </div>
           </div>
           <div
-            className={`fixed top-1/4 right-0 flex  w-screen justify-evenly pointer-events-none ${
+            className={`fixed top-24 right-0 flex  w-screen justify-evenly pointer-events-none ${
               ShowNewComponentModal
                 ? 'duration-150 opacity-100'
                 : ' duration-0  opacity-0 pointer-events-none'
             }`}
           >
             <div
-              className={`bg-white w-72 rounded-lg p-8 text-lg font-bold uppercase font-mono shadow-lg hover:shadow-2xl transition-all pointer-events-auto ${
+              className={`${
+                IsDarkMode ? 'bg-gray-800' : 'bg-white'
+              } w-72 rounded-lg p-8 text-lg font-bold uppercase font-mono shadow-lg hover:shadow-2xl transition-all  ${
                 ShowNewComponentModal
-                  ? 'duration-150 opacity-100'
+                  ? 'duration-150 opacity-100 pointer-events-auto'
                   : ' duration-0  opacity-0 pointer-events-none'
               }`}
             >
@@ -316,7 +339,11 @@ export default class NewClientScreen extends React.Component<
                 onChange={this.handleChange}
                 id="io"
                 value={NewComponent.io}
-                className="border-gray-300 p-1 border rounded-md text-mono"
+                className={`${
+                  IsDarkMode
+                    ? 'bg-gray-700 text-white border-gray-800'
+                    : 'bg-white text-black border-gray-200'
+                } p-1 border rounded-md text-mono`}
               >
                 <option value="input" disabled>
                   Input
@@ -328,7 +355,11 @@ export default class NewClientScreen extends React.Component<
                 onChange={this.handleChange}
                 id="type"
                 value={NewComponent.ComponentType}
-                className="border-gray-300 p-1 border rounded-md text-mono"
+                className={`${
+                  IsDarkMode
+                    ? 'bg-gray-700 text-white border-gray-800'
+                    : 'bg-white text-black border-gray-200'
+                } p-1 border rounded-md text-mono`}
               >
                 <option value="led">Led</option>
                 <option value="neopixel">NeoPixel</option>
@@ -339,16 +370,59 @@ export default class NewClientScreen extends React.Component<
                   8-Segment Display
                 </option>
               </select>
-              <p className="text-sm font-bold font-mono mt-2">SimVar</p>
+              <p className="text-sm font-bold font-mono mt-2">
+                SimVar{' '}
+                <a
+                  className="cursor-pointer text-blue-500"
+                  onClick={() =>
+                    OpenURL(
+                      'https://docs.flightsimulator.com/html/index.htm#t=Programming_Tools%2FSimVars%2FSimulation_Variables.htm'
+                    )
+                  }
+                >
+                  ?
+                </a>
+              </p>
               <select
                 onChange={this.handleChange}
                 id="simvar"
                 value={NewComponent.SimVar}
-                className="border-gray-300 p-1 border rounded-md w-full text-mono"
+                className={`${
+                  IsDarkMode
+                    ? 'bg-gray-700 text-white border-gray-800'
+                    : 'bg-white text-black border-gray-200'
+                } p-1 border rounded-md text-mono w-full`}
               >
                 {SimVars.sort().map((simvar: string) => (
                   <option value={simvar}>{simvar.replaceAll('_', ' ')}</option>
                 ))}
+              </select>
+              <p className="text-sm font-bold font-mono mt-2">
+                Value Type{' '}
+                <a
+                  className="cursor-pointer text-blue-500"
+                  onClick={() =>
+                    OpenURL(
+                      'https://docs.flightsimulator.com/html/index.htm#t=Programming_Tools%2FSimVars%2FSimulation_Variables.htm'
+                    )
+                  }
+                >
+                  ?
+                </a>
+              </p>
+              <select
+                onChange={this.handleChange}
+                id="valuetype"
+                value={NewComponent.ValueType}
+                className={`${
+                  IsDarkMode
+                    ? 'bg-gray-700 text-white border-gray-800'
+                    : 'bg-white text-black border-gray-200'
+                } p-1 border rounded-md text-mono w-full`}
+              >
+                <option value="bool">Bool</option>
+                <option value="string">Text</option>
+                <option value="number">Number</option>
               </select>
               <p className="text-sm font-bold font-mono mt-2">Index</p>
               <input
@@ -356,7 +430,11 @@ export default class NewClientScreen extends React.Component<
                 id="index"
                 value={NewComponent.Index}
                 type="number"
-                className="border-gray-300 p-1 border rounded-md text-mono"
+                className={`${
+                  IsDarkMode
+                    ? 'bg-gray-700 text-white border-gray-800'
+                    : 'bg-white text-black border-gray-200'
+                } p-1 border rounded-md text-mono`}
               />
               <p className="text-sm font-bold font-mono mt-2">Pin</p>
               <input
@@ -364,7 +442,11 @@ export default class NewClientScreen extends React.Component<
                 id="pin"
                 value={NewComponent.Pin}
                 type="number"
-                className="border-gray-300 p-1 border rounded-md text-mono"
+                className={`${
+                  IsDarkMode
+                    ? 'bg-gray-700 text-white border-gray-800'
+                    : 'bg-white text-black border-gray-200'
+                } p-1 border rounded-md text-mono`}
               />
               <div className="mt-2 grid grid-cols-2 justify-items-stretch gap-4">
                 <button

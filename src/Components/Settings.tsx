@@ -27,7 +27,9 @@ function isValidPort(port: string) {
   );
 }
 
-export interface ISettingsProps {}
+export interface ISettingsProps {
+  IsDarkMode: boolean;
+}
 
 export interface ISettingsState {
   host: string;
@@ -107,10 +109,15 @@ export default class Settings extends React.Component<
 
   public render() {
     const { hostError, portError, host, port, savedSettings } = this.state;
+    const { IsDarkMode } = this.props;
     return (
       <div>
         <div
-          className={`fixed bottom-14 right-14 h-24 w-64 bg-white rounded-lg transition-all duration-700 shadow-2xl border-2 border-gray-50 flex flex-col items-center justify-around  ${
+          className={`fixed bottom-14 right-14 h-24 w-64 ${
+            IsDarkMode
+              ? 'bg-gray-700 text-white border-gray-800'
+              : 'bg-white text-black border-gray-50'
+          } rounded-lg transition-all duration-700 shadow-2xl border-2 flex flex-col items-center justify-around  ${
             savedSettings ? 'opacity-100' : 'opacity-0'
           }`}
         >
@@ -119,12 +126,20 @@ export default class Settings extends React.Component<
         <div className="flex flex-col justify-between h-full">
           <div>
             <div className="m-2">
-              <p className="text-sm text-gray-800">Host IP</p>
+              <p
+                className={`text-sm ${
+                  IsDarkMode ? 'text-gray-200' : 'text-gray-800'
+                }`}
+              >
+                Host IP
+              </p>
 
               <input
-                className={`px-4 py-2 bg-gray-100 border-gray-300 border-2 rounded-md   ${
-                  hostError ? 'border-red-500' : ''
-                }`}
+                className={`px-4 py-2 ${
+                  IsDarkMode
+                    ? 'bg-gray-700 text-white border-gray-800'
+                    : 'bg-white text-black border-gray-200'
+                } border-2 rounded-md   ${hostError ? 'border-red-500' : ''}`}
                 value={host}
                 onChange={this.handleChange}
                 id="host"
@@ -132,11 +147,19 @@ export default class Settings extends React.Component<
             </div>
 
             <div className="m-2">
-              <p className="text-sm text-gray-800">Port</p>
-              <input
-                className={`px-4 py-2 bg-gray-100 border-gray-300 border-2 rounded-md ${
-                  portError ? 'border-red-500' : ''
+              <p
+                className={`text-sm ${
+                  IsDarkMode ? 'text-gray-200' : 'text-gray-800'
                 }`}
+              >
+                Port
+              </p>
+              <input
+                className={`px-4 py-2 ${
+                  IsDarkMode
+                    ? 'bg-gray-700 text-white border-gray-800'
+                    : 'bg-white text-black border-gray-200'
+                } border-2 rounded-md ${portError ? 'border-red-500' : ''}`}
                 value={port}
                 onChange={this.handleChange}
                 id="port"

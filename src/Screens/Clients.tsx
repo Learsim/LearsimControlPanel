@@ -10,6 +10,7 @@ import ScreenNames from '../Helpers/enums';
 export interface IClientsProps {
   NavigationManager: (target: ScreenNames) => void;
   Clients: Client[];
+  IsDarkMode: boolean;
 }
 
 export interface IClientsState {}
@@ -31,7 +32,7 @@ export default class ClientsScreen extends React.Component<
   }
 
   public render() {
-    const { Clients } = this.props;
+    const { Clients, IsDarkMode } = this.props;
     const fabIcon = (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -67,6 +68,7 @@ export default class ClientsScreen extends React.Component<
                   Online={client.IsOpen}
                   Adress={client.Config.Adress}
                   Description={client.Config.Description}
+                  IsDarkMode={IsDarkMode}
                 />
               ))
             : 'No Clients'}

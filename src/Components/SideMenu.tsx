@@ -5,6 +5,7 @@ class SideMenu extends React.Component<
   {
     NavigationManager: (target: ScreenNames) => void;
     CurrentScreen: ScreenNames;
+    IsDarkMode: boolean;
   },
   { isOpen: boolean }
 > {
@@ -24,11 +25,14 @@ class SideMenu extends React.Component<
 
   render() {
     const { isOpen } = this.state;
-    const { CurrentScreen } = this.props;
+    const { CurrentScreen, IsDarkMode } = this.props;
+    const SelectedColor = IsDarkMode ? 'bg-gray-500' : 'bg-gray-100';
     return (
       <>
         <div
-          className={`bg-white h-screen fixed z-10 transition-all duration-300 py-4 -left-4 ${
+          className={` ${
+            IsDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'
+          } h-screen fixed z-10 transition-all duration-300 py-4 -left-4 ${
             isOpen ? 'w-1/4 ' : 'w-0'
           }`}
         >
@@ -42,8 +46,10 @@ class SideMenu extends React.Component<
             <div>
               <div className="text-center text-2xl font-bold">Learsim</div>
               <div
-                className={`w-full h-12 text-lg hover:bg-gray-200 flex items-center cursor-pointer px-8 my-2 ${
-                  CurrentScreen === ScreenNames.dashboard ? 'bg-gray-100' : ''
+                className={`w-full h-12 text-lg ${
+                  IsDarkMode ? 'hover:bg-gray-600' : 'hover:bg-gray-200'
+                }  flex items-center cursor-pointer px-8 my-2 ${
+                  CurrentScreen === ScreenNames.dashboard ? SelectedColor : ''
                 }`}
                 onClick={() => this.navigateTo(ScreenNames.dashboard)}
                 aria-hidden="true"
@@ -51,8 +57,10 @@ class SideMenu extends React.Component<
                 Dashboard
               </div>
               <div
-                className={`w-full h-12 text-lg hover:bg-gray-200 flex items-center cursor-pointer px-8 my-2 ${
-                  CurrentScreen === ScreenNames.clients ? 'bg-gray-100' : ''
+                className={`w-full h-12 text-lg ${
+                  IsDarkMode ? 'hover:bg-gray-600' : 'hover:bg-gray-200'
+                } flex items-center cursor-pointer px-8 my-2 ${
+                  CurrentScreen === ScreenNames.clients ? SelectedColor : ''
                 }`}
                 onClick={() => this.navigateTo(ScreenNames.clients)}
                 aria-hidden="true"
@@ -60,8 +68,10 @@ class SideMenu extends React.Component<
                 Clients
               </div>
               <div
-                className={`w-full h-12 text-lg hover:bg-gray-200 flex items-center cursor-pointer px-8 my-2 ${
-                  CurrentScreen === ScreenNames.settings ? 'bg-gray-100' : ''
+                className={`w-full h-12 text-lg ${
+                  IsDarkMode ? 'hover:bg-gray-600' : 'hover:bg-gray-200'
+                } flex items-center cursor-pointer px-8 my-2 ${
+                  CurrentScreen === ScreenNames.settings ? SelectedColor : ''
                 }`}
                 onClick={() => this.navigateTo(ScreenNames.settings)}
                 aria-hidden="true"
@@ -69,8 +79,10 @@ class SideMenu extends React.Component<
                 Settings
               </div>
               <div
-                className={`w-full h-12 text-lg hover:bg-gray-200 flex items-center cursor-pointer px-8 my-2 ${
-                  CurrentScreen === ScreenNames.values ? 'bg-gray-100' : ''
+                className={`w-full h-12 text-lg ${
+                  IsDarkMode ? 'hover:bg-gray-600' : 'hover:bg-gray-200'
+                } flex items-center cursor-pointer px-8 my-2 ${
+                  CurrentScreen === ScreenNames.values ? SelectedColor : ''
                 }`}
                 onClick={() => this.navigateTo(ScreenNames.values)}
                 aria-hidden="true"

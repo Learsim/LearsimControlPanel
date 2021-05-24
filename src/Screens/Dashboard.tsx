@@ -10,11 +10,12 @@ export interface IDashboardProps {
   NavigationManager: (target: ScreenNames) => void;
   SimVars: SimVarValue[];
   clients: Client[];
+  IsDarkMode: boolean;
 }
 
 class Dashboard extends React.Component<IDashboardProps> {
   public render() {
-    const { NavigationManager, clients, SimVars } = this.props;
+    const { NavigationManager, clients, SimVars, IsDarkMode } = this.props;
     let lat = 0.0;
     let lon = 0.0;
     let dir = 0.0;
@@ -34,11 +35,15 @@ class Dashboard extends React.Component<IDashboardProps> {
       <div className="h-full">
         <div className="grid grid-cols-2 h-full gap-4 ">
           <div className="h-full z-0 py-4 pl-4">
-            <Map Lat={lat} Lon={lon} Direction={dir} />
+            <Map Lat={lat} Lon={lon} Direction={dir} IsDarkMode={IsDarkMode} />
           </div>
 
           <div className="h-full z-0 overflow-y-scroll">
-            <Clients NavigationManager={NavigationManager} Clients={clients} />
+            <Clients
+              NavigationManager={NavigationManager}
+              Clients={clients}
+              IsDarkMode={IsDarkMode}
+            />
           </div>
         </div>
       </div>

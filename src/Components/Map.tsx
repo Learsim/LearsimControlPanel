@@ -12,6 +12,7 @@ export interface IMapProps {
   Lat: number;
   Lon: number;
   Direction: number;
+  IsDarkMode: boolean;
 }
 export interface IMapState {
   lat: number;
@@ -60,7 +61,7 @@ class Map extends React.Component<IMapProps, IMapState> {
 
   render() {
     const { viewport, lockedon, lat, lon, connected } = this.state;
-    const { Lat, Lon, Direction } = this.props;
+    const { Lat, Lon, Direction, IsDarkMode } = this.props;
     return (
       <>
         <ReactMapGL
@@ -72,6 +73,11 @@ class Map extends React.Component<IMapProps, IMapState> {
           longitude={lockedon ? lon : viewport.longitude}
           onViewportChange={this.updateViewPort}
           mapboxApiAccessToken="pk.eyJ1IjoiYXhkcmEiLCJhIjoiY2tuMml3YXhzMGxoMzJub3U3M2E5ZWNiMiJ9.q2lb2ipatPphwA8piWyC1w"
+          mapStyle={
+            IsDarkMode
+              ? 'mapbox://styles/mapbox/dark-v10'
+              : 'mapbox://styles/mapbox/light-v10'
+          }
         >
           <Marker latitude={Lat} longitude={Lon}>
             <svg

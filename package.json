@@ -301,7 +301,7 @@
       "next"
     ]
   },
-  "husky": {
+  "husky-NotUsing": {
     "hooks": {
       "pre-commit": "lint-staged"
     }

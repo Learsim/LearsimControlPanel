@@ -14,7 +14,9 @@ import NewClientScreen from './NewClientScreen';
 import SettingScreen from './SettingsScreen';
 import ValueScreen from './ValueScreen';
 
-export interface IMainContentProps {}
+export interface IMainContentProps {
+  IsDarkMode: boolean;
+}
 export interface IMainContentStates {
   CurrentScreen: ScreenNames;
   SimStatus: boolean;
@@ -71,6 +73,8 @@ class MainContent extends React.Component<
   }
 
   render() {
+    const { IsDarkMode } = this.props;
+
     const { CurrentScreen, SimStatus, Clients, SimVars } = this.state;
     let Content: JSX.Element = <></>;
     switch (CurrentScreen) {
@@ -80,6 +84,7 @@ class MainContent extends React.Component<
             NavigationManager={this.NavigationManager}
             SimVars={SimVars}
             clients={Clients}
+            IsDarkMode={IsDarkMode}
           />
         );
         break;
@@ -88,17 +93,18 @@ class MainContent extends React.Component<
           <ClientsScreen
             NavigationManager={this.NavigationManager}
             Clients={Clients}
+            IsDarkMode={IsDarkMode}
           />
         );
         break;
       case 2:
-        Content = <SettingScreen />;
+        Content = <SettingScreen IsDarkMode={IsDarkMode} />;
         break;
       case 3:
-        Content = <ClientScreen />;
+        Content = <ClientScreen IsDarkMode={IsDarkMode} />;
         break;
       case 4:
-        Content = <NewClientScreen />;
+        Content = <NewClientScreen IsDarkMode={IsDarkMode} />;
         break;
       case 5:
         Content = <ValueScreen SimVars={SimVars} />;
@@ -109,6 +115,7 @@ class MainContent extends React.Component<
             NavigationManager={this.NavigationManager}
             SimVars={SimVars}
             clients={Clients}
+            IsDarkMode={IsDarkMode}
           />
         );
     }
@@ -117,7 +124,9 @@ class MainContent extends React.Component<
         <div className="pt-20 h-screen">
           <div
             id="content"
-            className="overflow-y-auto overflow-x-hidden h-full w-screen"
+            className={`overflow-y-auto overflow-x-hidden  transition-colors  h-full w-screen ${
+              IsDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'
+            }`}
           >
             {' '}
             {Content}
@@ -125,11 +134,14 @@ class MainContent extends React.Component<
         </div>
         <div
           id="topBar"
-          className="w-screen h-20 shadow-lg fixed bg-white top-0 flex flex-row  justify-between px-4"
+          className={`w-screen h-20 shadow-lg fixed  transition-colors duration-300  ${
+            IsDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'
+          }  top-0 flex flex-row  justify-between px-4`}
         >
           <SideMenu
             NavigationManager={this.NavigationManager}
             CurrentScreen={CurrentScreen}
+            IsDarkMode={IsDarkMode}
           />
           <div className="items-center flex-row flex">
             <div className="text-2xl font-bold text-center">

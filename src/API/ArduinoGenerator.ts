@@ -40,7 +40,6 @@ export default function GenerateArduinoCode(arduino: Arduino): string {
   let Displays: Display[] = [];
   let NeoPixels: NeoPixelStrip[] = [];
   let EightSegDisplays: EightSegDisplay[] = [];
-  console.log(arduino);
   let Init = '';
   let Setup = '';
   let CopyRight = '';
