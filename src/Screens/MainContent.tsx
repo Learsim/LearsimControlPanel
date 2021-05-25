@@ -113,7 +113,12 @@ class MainContent extends React.Component<
         Content = <ClientScreen IsDarkMode={IsDarkMode} />;
         break;
       case 4:
-        Content = <NewClientScreen IsDarkMode={IsDarkMode} />;
+        Content = (
+          <NewClientScreen
+            IsDarkMode={IsDarkMode}
+            IsExtended={SideMenuExtended}
+          />
+        );
         break;
       case 5:
         Content = <ValueScreen SimVars={SimVars} />;
