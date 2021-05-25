@@ -22,6 +22,7 @@ import OpenURL from '../Helpers/helpers';
 
 export interface INewClientScreenProps {
   IsDarkMode: boolean;
+  IsExtended: boolean;
 }
 
 export interface INewComponentState {
@@ -206,7 +207,7 @@ export default class NewClientScreen extends React.Component<
       ArudinoCode,
       ShowComponentModal,
     } = this.state;
-    const { IsDarkMode } = this.props;
+    const { IsDarkMode, IsExtended } = this.props;
     return (
       <div className="h-full">
         <div className="grid grid-cols-2 h-full">
@@ -243,7 +244,9 @@ export default class NewClientScreen extends React.Component<
                 aria-hidden="true"
               >
                 <FAB
-                  className="w-12 h-12 fixed bottom-10 right-1/2 mr-10 bg-green-400  text-white shadow rounded-full flex flex-row justify-center items-center cursor-pointer hover:bg-green-500 hover:shadow-xl transition-all duration-200"
+                  className={`w-12 h-12  fixed bottom-10 right-1/2 ${
+                    IsExtended ? '' : 'mr-14'
+                  }  bg-green-400  text-white shadow rounded-full flex flex-row justify-center items-center cursor-pointer hover:bg-green-500 hover:shadow-xl transition-all duration-200`}
                   Icon={fabIcon}
                 />
               </div>
