@@ -123,7 +123,7 @@ export default class Settings extends React.Component<
         >
           <div className="text-green-500 text-xl ">Saved Settings!</div>
         </div>
-        <div className="flex flex-col justify-between h-full">
+        <div className="flex flex-col items-center h-full">
           <div>
             <div className="m-2">
               <p
@@ -167,7 +167,7 @@ export default class Settings extends React.Component<
             </div>
           </div>
           <div>
-            <div className="flex flex-row justify-end ">
+            <div className="flex flex-row justify-end mt-4">
               <div
                 className="mx-2 px-4 py-2 rounded-md  shadow-md cursor-pointer text-white bg-red-500 select-none"
                 onClick={this.cancelSettings}

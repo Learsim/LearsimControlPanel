@@ -24,7 +24,7 @@ class SettingScreen extends React.Component<
     return (
       <div className=" w-screen flex justify-evenly h-full">
         <div
-          className={` w-1/5 py-24 transition-colors ${
+          className={` w-1/3 py-24 transition-colors ${
             IsDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'
           } h-full`}
         >

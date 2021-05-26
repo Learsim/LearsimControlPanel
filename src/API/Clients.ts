@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Arduino from '../Arduino/Arduino.Common';
-import { clientsEndpoint } from './API.Common';
+import { clientEndpoint, clientsEndpoint } from './API.Common';
 
 export interface Client {
   IsOpen: boolean;
@@ -34,13 +34,13 @@ export default function getClients(hostname: string): Promise<Client[]> {
     return res.data;
   });
 }
-export function AddClient(
-  hostname: string,
-  arduino: Arduino
-): Promise<Client[]> {
-  return axios.get<Client[]>(hostname.concat(clientsEndpoint)).then((res) => {
-    return res.data;
-  });
+export function AddClient(hostname: string, arduino: Arduino) {
+  console.log(JSON.stringify(arduino));
+  return axios
+    .post(hostname.concat(clientEndpoint), JSON.stringify(arduino))
+    .then((res) => {
+      return res.data;
+    });
 }
 export enum ConnectionType {
   SERIAL,
