@@ -13,7 +13,7 @@ const AppContent = () => {
     setDarkMode(IsDarkMode());
     setGotDarkMode(true);
   }
-  setInterval(() => setDarkMode(IsDarkMode()), 15000);
+  setInterval(() => setDarkMode(IsDarkMode()), 1000);
   return <MainContent IsDarkMode={DarkMode} />;
 };
 

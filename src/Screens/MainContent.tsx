@@ -1,9 +1,11 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable @typescript-eslint/no-empty-interface */
 
 import React from 'react';
 import getClients, { Client } from '../API/Clients';
 import getSimVarValues, { SimVarValue } from '../API/SimVarValues';
 import getStatus from '../API/Status';
+import Map from '../Components/Map';
 import NewSideMenu from '../Components/NewSideMenu';
 import SideMenu from '../Components/SideMenu';
 import SimStatusIcon from '../Components/SimStatusIcon';
@@ -123,6 +125,36 @@ class MainContent extends React.Component<
       case 5:
         Content = <ValueScreen SimVars={SimVars} />;
         break;
+      case 6:
+        break;
+      case 7:
+        break;
+      case 8:
+        break;
+      case 9:
+        let lat = 0.0;
+        let lon = 0.0;
+        let dir = 0.0;
+
+        if (SimVars.length > 0) {
+          SimVars.forEach((SimVar) => {
+            if (SimVar.Key.Identfier === 'GPS POSITION LON') {
+              lon = Number(SimVar.Value.replace(',', '.'));
+            } else if (SimVar.Key.Identfier === 'GPS POSITION LAT') {
+              lat = Number(SimVar.Value.replace(',', '.'));
+            } else if (SimVar.Key.Identfier === 'GPS GROUND TRUE HEADING') {
+              dir = Number(SimVar.Value.replace(',', '.'));
+            }
+          });
+        }
+        Content = (
+          <div className="p-1 h-full w-full">
+            {' '}
+            <Map IsDarkMode={IsDarkMode} Lat={lat} Lon={lon} Direction={dir} />
+          </div>
+        );
+        break;
+
       default:
         Content = (
           <Dashboard
@@ -177,16 +209,23 @@ class MainContent extends React.Component<
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-10 w-10 text-gray-600"
+                className={`h-10 w-10 text-gray-600 transform transition-all	 duration-300 ${
+                  SideMenuExtended ? ' rotate-180 ' : ' rotate-0	'
+                }`}
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
                 <path
                   strokeLinecap="round"
+                  className="transition-all duration-500"
                   strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
+                  strokeWidth={2}
+                  d={
+                    SideMenuExtended
+                      ? `M9 5l7 7-7 7`
+                      : `M4 6h16M4 12h16M4 18h16`
+                  }
                 />
               </svg>
             </div>
@@ -194,7 +233,9 @@ class MainContent extends React.Component<
           <div className="items-center flex-row flex">
             <div className="text-2xl font-bold text-center">
               {ScreenNames[CurrentScreen].charAt(0).toUpperCase() +
-                ScreenNames[CurrentScreen].slice(1)}
+                ScreenNames[CurrentScreen].slice(1)
+                  .replace(/([A-Z])/g, ' $1')
+                  .trim()}
             </div>
           </div>
           <SimStatusIcon

@@ -60,7 +60,7 @@ export default class ClientsScreen extends React.Component<
             Icon={fabIcon}
           />
         </div>
-        <div className=" w-full p-8 flex-row flex flex-wrap justify-evenly ">
+        <div className=" w-full p-4 flex-row flex flex-wrap justify-evenly ">
           {Clients.length > 0
             ? Clients.map((client) => (
                 <ClientComponent

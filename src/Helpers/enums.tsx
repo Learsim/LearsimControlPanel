@@ -5,5 +5,9 @@ enum ScreenNames {
   client,
   newClient,
   values,
+  weather,
+  aircraftInfo,
+  nodes,
+  map
 }
 export default ScreenNames;
