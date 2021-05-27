@@ -10,6 +10,7 @@ import NewSideMenu from '../Components/NewSideMenu';
 import SideMenu from '../Components/SideMenu';
 import SimStatusIcon from '../Components/SimStatusIcon';
 import ScreenNames from '../Helpers/enums';
+import AircraftScreen from './AircraftScreen';
 import ClientsScreen from './Clients';
 import ClientScreen from './ClientScreen';
 import Dashboard from './Dashboard';
@@ -128,6 +129,8 @@ class MainContent extends React.Component<
       case 6:
         break;
       case 7:
+        Content = <AircraftScreen />;
+
         break;
       case 8:
         break;

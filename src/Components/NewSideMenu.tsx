@@ -44,8 +44,8 @@ export default class NewSideMenu extends React.Component<INewSideMenuProps> {
         } shadow-md border-r-2 ${bgColor} ${borderColor}  h-full transition-all duration-300  `}
       >
         <div className="h-full flex-col flex justify-between">
-          <div className="flex flex-col">
-            <SideMenuItem
+          <div className="flex flex-col overflow-y-auto overflow-x-hidden smallScroll">
+          <SideMenuItem
               selectedColor={selectedColor}
               NavigationManager={this.navigateTo}
               IsExpanded={IsExpanded}
