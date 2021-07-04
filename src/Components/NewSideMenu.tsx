@@ -15,7 +15,6 @@ import SideMenuItem from './SideMenuItem';
 export interface INewSideMenuProps {
   NavigationManager: (target: ScreenNames) => void;
   CurrentScreen: ScreenNames;
-  IsDarkMode: boolean;
   IsExpanded: boolean;
 }
 
@@ -32,26 +31,22 @@ export default class NewSideMenu extends React.Component<INewSideMenuProps> {
   }
 
   public render() {
-    const { CurrentScreen, IsDarkMode, IsExpanded } = this.props;
-    const bgColor = IsDarkMode ? 'bg-gray-800' : 'bg-white';
-    const borderColor = IsDarkMode ? 'border-gray-800' : 'border-gray-200';
-    const selectedColor = IsDarkMode ? 'bg-gray-700' : 'bg-gray-200';
-    const iconColor = IsDarkMode ? 'text-white' : 'text-gray-600';
+    const { CurrentScreen, IsExpanded } = this.props;
+    const selectedColor = 'dark:bg-gray-700 bg-gray-200';
     return (
       <div
         className={`${
           IsExpanded ? 'w-48' : 'w-16'
-        } shadow-md border-r-2 ${bgColor} ${borderColor}  h-full transition-all duration-300  `}
+        } shadow-md border-r-2 dark:bg-gray-800 bg-white dark:border-gray-800 border-gray-200  h-full transition-all duration-300  `}
       >
         <div className="h-full flex-col flex justify-between">
           <div className="flex flex-col overflow-y-auto overflow-x-hidden smallScroll">
-          <SideMenuItem
+            <SideMenuItem
               selectedColor={selectedColor}
               NavigationManager={this.navigateTo}
               IsExpanded={IsExpanded}
               CurrentScreen={CurrentScreen}
               Target={ScreenNames.dashboard}
-              iconColor={iconColor}
               name="Dashboard"
               icon={DashboardIcon}
             />
@@ -61,7 +56,6 @@ export default class NewSideMenu extends React.Component<INewSideMenuProps> {
               IsExpanded={IsExpanded}
               CurrentScreen={CurrentScreen}
               Target={ScreenNames.clients}
-              iconColor={iconColor}
               name="Clients"
               icon={ClientIcon}
             />
@@ -71,7 +65,6 @@ export default class NewSideMenu extends React.Component<INewSideMenuProps> {
               IsExpanded={IsExpanded}
               CurrentScreen={CurrentScreen}
               Target={ScreenNames.nodes}
-              iconColor={iconColor}
               name="Nodes"
               icon={ServerIcon}
             />
@@ -82,7 +75,6 @@ export default class NewSideMenu extends React.Component<INewSideMenuProps> {
               IsExpanded={IsExpanded}
               CurrentScreen={CurrentScreen}
               Target={ScreenNames.values}
-              iconColor={iconColor}
               name="Values"
               icon={ValuesIcon}
             />
@@ -92,7 +84,6 @@ export default class NewSideMenu extends React.Component<INewSideMenuProps> {
               IsExpanded={IsExpanded}
               CurrentScreen={CurrentScreen}
               Target={ScreenNames.weather}
-              iconColor={iconColor}
               name="Conditions"
               icon={WeatherIcon}
             />
@@ -102,7 +93,6 @@ export default class NewSideMenu extends React.Component<INewSideMenuProps> {
               IsExpanded={IsExpanded}
               CurrentScreen={CurrentScreen}
               Target={ScreenNames.aircraftInfo}
-              iconColor={iconColor}
               name="Aircraft"
               icon={PlaneIcon}
             />{' '}
@@ -112,7 +102,6 @@ export default class NewSideMenu extends React.Component<INewSideMenuProps> {
               IsExpanded={IsExpanded}
               CurrentScreen={CurrentScreen}
               Target={ScreenNames.map}
-              iconColor={iconColor}
               name="Map"
               icon={MapIcon}
             />{' '}
@@ -123,7 +112,6 @@ export default class NewSideMenu extends React.Component<INewSideMenuProps> {
             IsExpanded={IsExpanded}
             CurrentScreen={CurrentScreen}
             Target={ScreenNames.settings}
-            iconColor={iconColor}
             name="Settings"
             icon={SettingsIcon}
           />

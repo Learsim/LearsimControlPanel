@@ -1,20 +1,19 @@
 /* eslint-disable global-require */
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import mDNS from 'multicast-dns';
 import MainContent from './Screens/MainContent';
-
 import './App.global.css';
-import { IsDarkMode } from './Helpers/helpers';
 
 const AppContent = () => {
-  const [DarkMode, setDarkMode] = useState(false);
-  const [GotDarkMode, setGotDarkMode] = useState(false);
-  if (!GotDarkMode) {
-    setDarkMode(IsDarkMode());
-    setGotDarkMode(true);
-  }
-  setInterval(() => setDarkMode(IsDarkMode()), 1000);
-  return <MainContent IsDarkMode={DarkMode} />;
+  const x = mDNS();
+  x.on('response', function (response) {
+    console.log('got a response packet:', response);
+  });
+
+  x.query('learsim', 'A');
+
+  return <MainContent />;
 };
 
 export default function App() {

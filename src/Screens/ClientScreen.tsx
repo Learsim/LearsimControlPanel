@@ -2,9 +2,7 @@
 
 import * as React from 'react';
 
-export interface IClientScreenProps {
-  IsDarkMode: boolean;
-}
+export interface IClientScreenProps {}
 
 export interface IClientScreenState {}
 

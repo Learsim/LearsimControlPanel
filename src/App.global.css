@@ -9,8 +9,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-
  ::-webkit-scrollbar {
     width: 10px;
 }
@@ -78,7 +76,6 @@
 
 .cls-6 {
     fill: none;
-    stroke: white;
     stroke-miterlimit: 10;
     stroke-width: 4px;
 }
@@ -94,3 +91,27 @@
 .cls-9 {
     fill: #fff;
 }
+
+
+.weather-compass2 {
+    font-size: 31.54px;
+    font-family: 'OpenSans', 'Open Sans', Arial, Helvetica, sans-serif;
+}
+
+.weather-compass3 {
+    fill: #c80000;
+}
+@keyframes alertAnimation {
+    0% {margin-bottom: 0px;}
+    2.5%  {margin-bottom: 20px;}
+    5%  {margin-bottom: 0px;}
+    7.5%  {margin-bottom: 10px;}
+    10%  {margin-bottom: 0px;}
+    12.5%  {margin-bottom: 3px;}
+    15%  {margin-bottom: 0px;}
+    17.5%  {margin-bottom: 2px;}
+    20%  {margin-bottom: 0px;}
+    22.5%  {margin-bottom: 1px;}
+    25%  {margin-bottom: 0px;}
+    100%  {margin-bottom: 0px;}
+  }

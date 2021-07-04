@@ -18,10 +18,9 @@ import Display from '../Arduino/Output/Display';
 import Led from '../Arduino/Output/Led';
 import NeoPixelStrip from '../Arduino/Output/NeoPixelStrip';
 import FAB from '../Components/fab';
-import OpenURL from '../Helpers/helpers';
+import OpenURL, { IsDarkMode } from '../Helpers/helpers';
 
 export interface INewClientScreenProps {
-  IsDarkMode: boolean;
   IsExtended: boolean;
 }
 
@@ -40,6 +39,7 @@ export interface INewClientScreenState {
   SimVars: string[];
   NewComponent: INewComponentState;
   ArudinoCode: string;
+  IsDarkMode: boolean;
 }
 
 function saveFile(): void {
@@ -66,6 +66,7 @@ export default class NewClientScreen extends React.Component<
         ValueType: 'bool',
       },
       ArudinoCode: '',
+      IsDarkMode: IsDarkMode(),
     };
     this.addNewComponent = this.addNewComponent.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -206,8 +207,9 @@ export default class NewClientScreen extends React.Component<
       NewComponent,
       ArudinoCode,
       ShowComponentModal,
+      IsDarkMode,
     } = this.state;
-    const { IsDarkMode, IsExtended } = this.props;
+    const { IsExtended } = this.props;
     return (
       <div className="h-full">
         <div className="grid grid-cols-2 h-full">
@@ -289,9 +291,7 @@ export default class NewClientScreen extends React.Component<
             }`}
           >
             <div
-              className={`${
-                IsDarkMode ? 'bg-gray-800' : 'bg-white'
-              } w-72 rounded-lg p-8 text-lg font-bold  uppercase font-mono shadow-lg hover:shadow-2xl transition-all pointer-events-auto ${
+              className={`dark:bg-gray-800 bg-white w-72 rounded-lg p-8 text-lg font-bold  uppercase font-mono shadow-lg hover:shadow-2xl transition-all pointer-events-auto ${
                 ShowComponentModal
                   ? 'duration-150 opacity-100'
                   : ' duration-0  opacity-0 pointer-events-none'
@@ -328,9 +328,7 @@ export default class NewClientScreen extends React.Component<
             }`}
           >
             <div
-              className={`${
-                IsDarkMode ? 'bg-gray-800' : 'bg-white'
-              } w-72 rounded-lg p-8 text-lg font-bold uppercase font-mono shadow-lg hover:shadow-2xl transition-all  ${
+              className={` dark:bg-gray-800 bg-white w-72 rounded-lg p-8 text-lg font-bold uppercase font-mono shadow-lg hover:shadow-2xl transition-all  ${
                 ShowNewComponentModal
                   ? 'duration-150 opacity-100 pointer-events-auto'
                   : ' duration-0  opacity-0 pointer-events-none'
@@ -342,11 +340,7 @@ export default class NewClientScreen extends React.Component<
                 onChange={this.handleChange}
                 id="io"
                 value={NewComponent.io}
-                className={`${
-                  IsDarkMode
-                    ? 'bg-gray-700 text-white border-gray-800'
-                    : 'bg-white text-black border-gray-200'
-                } p-1 border rounded-md text-mono`}
+                className="dark:bg-gray-700 dark:text-white dark:border-gray-800 bg-white text-black border-gray-200 p-1 border rounded-md text-mono"
               >
                 <option value="input" disabled>
                   Input
@@ -358,11 +352,7 @@ export default class NewClientScreen extends React.Component<
                 onChange={this.handleChange}
                 id="type"
                 value={NewComponent.ComponentType}
-                className={`${
-                  IsDarkMode
-                    ? 'bg-gray-700 text-white border-gray-800'
-                    : 'bg-white text-black border-gray-200'
-                } p-1 border rounded-md text-mono`}
+                className="dark:bg-gray-700 dark:text-white dark:border-gray-800 bg-white text-black border-gray-200 p-1 border rounded-md text-mono"
               >
                 <option value="led">Led</option>
                 <option value="neopixel">NeoPixel</option>
@@ -390,11 +380,7 @@ export default class NewClientScreen extends React.Component<
                 onChange={this.handleChange}
                 id="simvar"
                 value={NewComponent.SimVar}
-                className={`${
-                  IsDarkMode
-                    ? 'bg-gray-700 text-white border-gray-800'
-                    : 'bg-white text-black border-gray-200'
-                } p-1 border rounded-md text-mono w-full`}
+                className="dark:bg-gray-700 dark:text-white dark:border-gray-800 bg-white text-black border-gray-200 p-1 border rounded-md text-mono w-full"
               >
                 {SimVars.sort().map((simvar: string) => (
                   <option value={simvar}>{simvar.replaceAll('_', ' ')}</option>
@@ -417,11 +403,7 @@ export default class NewClientScreen extends React.Component<
                 onChange={this.handleChange}
                 id="valuetype"
                 value={NewComponent.ValueType}
-                className={`${
-                  IsDarkMode
-                    ? 'bg-gray-700 text-white border-gray-800'
-                    : 'bg-white text-black border-gray-200'
-                } p-1 border rounded-md text-mono w-full`}
+                className="dark:bg-gray-700 dark:text-white dark:border-gray-800 bg-white text-black border-gray-200 p-1 border rounded-md text-mono w-full"
               >
                 <option value="bool">Bool</option>
                 <option value="string">Text</option>
@@ -433,11 +415,7 @@ export default class NewClientScreen extends React.Component<
                 id="index"
                 value={NewComponent.Index}
                 type="number"
-                className={`${
-                  IsDarkMode
-                    ? 'bg-gray-700 text-white border-gray-800'
-                    : 'bg-white text-black border-gray-200'
-                } p-1 border rounded-md text-mono`}
+                className="dark:bg-gray-700 dark:text-white dark:border-gray-800 bg-white text-black border-gray-200 p-1 border rounded-md text-mono"
               />
               <p className="text-sm font-bold font-mono mt-2">Pin</p>
               <input
@@ -445,11 +423,7 @@ export default class NewClientScreen extends React.Component<
                 id="pin"
                 value={NewComponent.Pin}
                 type="number"
-                className={`${
-                  IsDarkMode
-                    ? 'bg-gray-700 text-white border-gray-800'
-                    : 'bg-white text-black border-gray-200'
-                } p-1 border rounded-md text-mono`}
+                className="dark:bg-gray-700 dark:text-white dark:border-gray-800 bg-white text-black border-gray-200 p-1 border rounded-md text-mono"
               />
               <div className="mt-2 grid grid-cols-2 justify-items-stretch gap-4">
                 <button

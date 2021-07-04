@@ -1,31 +1,37 @@
+/* eslint-disable react/self-closing-comp */
 /* eslint-disable no-case-declarations */
 /* eslint-disable @typescript-eslint/no-empty-interface */
 
+import mDNS from 'multicast-dns';
 import React from 'react';
 import getClients, { Client } from '../API/Clients';
-import getSimVarValues, { SimVarValue } from '../API/SimVarValues';
+import getSimVarValues, { LearVar, SimVarValue } from '../API/SimVarValues';
 import getStatus from '../API/Status';
 import Map from '../Components/Map';
 import NewSideMenu from '../Components/NewSideMenu';
 import SideMenu from '../Components/SideMenu';
 import SimStatusIcon from '../Components/SimStatusIcon';
 import ScreenNames from '../Helpers/enums';
+import { WarningTriangle } from '../Helpers/Icons';
+import { NodeStatus } from '../Helpers/Nodes';
 import AircraftScreen from './AircraftScreen';
 import ClientsScreen from './Clients';
 import ClientScreen from './ClientScreen';
 import Dashboard from './Dashboard';
 import NewClientScreen from './NewClientScreen';
+import NodesScreen from './NodesScreen';
 import SettingScreen from './SettingsScreen';
 import ValueScreen from './ValueScreen';
+import WeatherScreen from './WeatherScreen';
 
-export interface IMainContentProps {
-  IsDarkMode: boolean;
-}
+export interface IMainContentProps {}
 export interface IMainContentStates {
   CurrentScreen: ScreenNames;
   SimStatus: boolean;
+  ServerStatus: boolean;
   Clients: Client[];
   SimVars: SimVarValue[];
+  LearVars: LearVar[];
   SideMenuExtended: boolean;
 }
 class MainContent extends React.Component<
@@ -39,15 +45,17 @@ class MainContent extends React.Component<
     this.state = {
       CurrentScreen: ScreenNames.dashboard,
       SimStatus: false,
+      ServerStatus: false,
       Clients: [],
       SimVars: [],
+      LearVars: [],
       SideMenuExtended: false,
     };
     this.NavigationManager = this.NavigationManager.bind(this);
   }
 
   componentDidMount() {
-    this.interval = setInterval(() => this.UpdateData(), 2500);
+    this.interval = setInterval(() => this.UpdateData(), 200);
   }
 
   componentWillUnmount() {
@@ -59,19 +67,24 @@ class MainContent extends React.Component<
       localStorage.getItem('port') || '8958'
     }/`;
     getStatus(URL)
-      .then((res) => this.setState({ SimStatus: res.SimConnection }))
+      .then((res) =>
+        this.setState({ SimStatus: res.SimConnection, ServerStatus: true })
+      )
       .catch((res) => {
         console.log('Could not reach API');
-        this.setState({ SimStatus: false });
+        this.setState({ SimStatus: false, ServerStatus: false });
       });
     // await new Promise((resolve) => setTimeout(resolve, 200));
     getClients(URL)
       .then((res) => this.setState({ Clients: res }))
-      .catch((res) => console.log('Could not reach API'));
+      .catch((res) => null);
+
     // await new Promise((resolve) => setTimeout(resolve, 200));
     getSimVarValues(URL)
-      .then((res) => this.setState({ SimVars: res }))
-      .catch((res) => console.log('Could not reach API'));
+      .then((res) =>
+        this.setState({ SimVars: res.SimVars, LearVars: res.LearVars })
+      )
+      .catch((res) => null);
   }
 
   NavigationManager(target: ScreenNames) {
@@ -79,14 +92,14 @@ class MainContent extends React.Component<
   }
 
   render() {
-    const { IsDarkMode } = this.props;
-
     const {
       CurrentScreen,
       SimStatus,
       Clients,
       SimVars,
       SideMenuExtended,
+      ServerStatus,
+      LearVars,
     } = this.state;
     let Content: JSX.Element = <></>;
     switch (CurrentScreen) {
@@ -96,7 +109,6 @@ class MainContent extends React.Component<
             NavigationManager={this.NavigationManager}
             SimVars={SimVars}
             clients={Clients}
-            IsDarkMode={IsDarkMode}
           />
         );
         break;
@@ -105,34 +117,48 @@ class MainContent extends React.Component<
           <ClientsScreen
             NavigationManager={this.NavigationManager}
             Clients={Clients}
-            IsDarkMode={IsDarkMode}
           />
         );
         break;
       case 2:
-        Content = <SettingScreen IsDarkMode={IsDarkMode} />;
+        Content = <SettingScreen />;
         break;
       case 3:
-        Content = <ClientScreen IsDarkMode={IsDarkMode} />;
+        Content = <ClientScreen />;
         break;
       case 4:
-        Content = (
-          <NewClientScreen
-            IsDarkMode={IsDarkMode}
-            IsExtended={SideMenuExtended}
-          />
-        );
+        Content = <NewClientScreen IsExtended={SideMenuExtended} />;
         break;
       case 5:
-        Content = <ValueScreen SimVars={SimVars} />;
+        Content = <ValueScreen SimVars={SimVars} LearVars={LearVars} />;
         break;
       case 6:
+        Content = <WeatherScreen SimVars={SimVars} />;
+
         break;
       case 7:
-        Content = <AircraftScreen />;
+        Content = <AircraftScreen SimVars={SimVars} />;
 
         break;
       case 8:
+        Content = (
+          <NodesScreen
+            Nodes={[
+              {
+                Name: 'Client 1',
+                IP: '192.168.0.2',
+                Port: 24454,
+                Status: NodeStatus.Offline,
+              },
+              {
+                Name: 'Client 2',
+                IP: '192.168.0.3',
+                Port: 24454,
+                Status: NodeStatus.Online,
+              },
+            ]}
+          />
+        );
         break;
       case 9:
         let lat = 0.0;
@@ -153,7 +179,7 @@ class MainContent extends React.Component<
         Content = (
           <div className="p-1 h-full w-full">
             {' '}
-            <Map IsDarkMode={IsDarkMode} Lat={lat} Lon={lon} Direction={dir} />
+            <Map Lat={lat} Lon={lon} Direction={dir} />
           </div>
         );
         break;
@@ -164,23 +190,48 @@ class MainContent extends React.Component<
             NavigationManager={this.NavigationManager}
             SimVars={SimVars}
             clients={Clients}
-            IsDarkMode={IsDarkMode}
           />
         );
     }
     return (
       <div>
+        {ServerStatus ? (
+          ''
+        ) : (
+          <div
+            className="h-16 w-80 p-4 rounded-xl fixed z-50 bottom-5 right-5 bg-white drop-shadow-lg text-red-500 flex items-center"
+            style={{
+              animation:
+                '4s ease-in-out 0s infinite normal none running alertAnimation',
+            }}
+          >
+            <div className="flex flex-row content-evenly w-full place-content-around ">
+              <div className="font-bold self-center	">
+                <p>Could not connect to server</p>
+              </div>
+              <div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-10 w-10 text-red-500"
+                  style={{ minHeight: '2.5rem', minWidth: '2.5rem' }}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  {WarningTriangle}
+                </svg>
+              </div>
+            </div>
+          </div>
+        )}
         <div className="pt-20 h-screen">
           <div
             id="content"
-            className={`overflow-y-auto overflow-x-hidden  transition-colors  h-full w-screen ${
-              IsDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'
-            }`}
+            className="overflow-y-auto overflow-x-hidden  transition-colors  h-full w-screen dark:bg-gray-900 dark:text-white bg-white text-black"
           >
             {' '}
             <div className="flex flex-row h-full w-screen">
               <NewSideMenu
-                IsDarkMode={IsDarkMode}
                 IsExpanded={SideMenuExtended}
                 NavigationManager={this.NavigationManager}
                 CurrentScreen={CurrentScreen}
@@ -191,14 +242,12 @@ class MainContent extends React.Component<
         </div>
         <div
           id="topBar"
-          className={`w-screen h-20 shadow-lg fixed  transition-colors duration-300  ${
-            IsDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'
-          }  top-0 flex flex-row  justify-between px-3`}
+          className="w-screen h-20 shadow-lg fixed  transition-colors duration-300 dark:bg-gray-800 dark:text-white bg-white text-black  top-0 flex flex-row  justify-between px-3"
         >
           {/* <SideMenu
             NavigationManager={this.NavigationManager}
             CurrentScreen={CurrentScreen}
-            IsDarkMode={IsDarkMode}
+            
           /> */}
           <div className="h-full flex items-center ">
             <div

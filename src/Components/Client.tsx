@@ -6,7 +6,6 @@ export interface IClientProps {
   Adress: string;
   Description: string;
   Online: boolean;
-  IsDarkMode: boolean;
 }
 
 export interface IClientState {}
@@ -22,15 +21,9 @@ export default class ClientComponent extends React.Component<
   }
 
   public render() {
-    const { Name, Adress, Online, Description, IsDarkMode } = this.props;
+    const { Name, Adress, Online, Description } = this.props;
     return (
-      <div
-        className={`bg-white rounded-md shadow-md w-72 h-52 m-2  transition-colors   border-2 cursor-pointer flex flex-col  py-4 px-5 justify-between ${
-          IsDarkMode
-            ? 'bg-gray-700 text-white border-gray-800'
-            : 'bg-white text-black border-gray-200'
-        }`}
-      >
+      <div className="bg-white rounded-md shadow-md w-72 h-52 m-2  transition-colors   border-2 cursor-pointer flex flex-col  py-4 px-5 justify-between dark:bg-gray-700 dark:text-white dark:border-gray-800 bg-white text-black border-gray-200">
         <div>
           <div className="flex flex-row  justify-between">
             <div className="text-2xl">{Name}</div>

@@ -5,7 +5,6 @@ export interface ISideMenuItemProps {
   CurrentScreen: ScreenNames;
   Target: ScreenNames;
   selectedColor: string;
-  iconColor: string;
   NavigationManager: (target: ScreenNames) => void;
   icon: JSX.Element;
   name: string;
@@ -23,7 +22,6 @@ export default class SideMenuItem extends React.Component<ISideMenuItemProps> {
       IsExpanded,
       selectedColor,
       CurrentScreen,
-      iconColor,
       Target,
       icon,
       name,
@@ -33,7 +31,7 @@ export default class SideMenuItem extends React.Component<ISideMenuItemProps> {
         <div
           className={`h-16 ${
             IsExpanded ? 'w-48 shadow-sm' : 'w-16'
-          }  hover:${selectedColor} cursor-pointer flex px-3 py-3 items-center transition-all duration-300 ${
+          }  dark:hover:bg-gray-700 hover:bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-white cursor-pointer flex px-3 py-3 items-center transition-all duration-300 ${
             CurrentScreen === Target ? selectedColor : ''
           }`}
           onClick={() => this.navigateTo(Target)}
@@ -41,7 +39,7 @@ export default class SideMenuItem extends React.Component<ISideMenuItemProps> {
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className={`h-10 w-10 ${iconColor}`}
+            className="h-10 w-10 dark:text-white text-gray-600"
             style={{ minHeight: '2.5rem', minWidth: '2.5rem' }}
             fill="none"
             viewBox="0 0 24 24"

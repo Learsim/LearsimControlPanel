@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
 import * as React from 'react';
 import ReactMapGL, { Marker } from 'react-map-gl';
+import { IsDarkMode } from '../Helpers/helpers';
 
 export interface ViewPort {
   longitude: number;
@@ -12,7 +13,6 @@ export interface IMapProps {
   Lat: number;
   Lon: number;
   Direction: number;
-  IsDarkMode: boolean;
 }
 export interface IMapState {
   lat: number;
@@ -20,6 +20,7 @@ export interface IMapState {
   connected: boolean;
   lockedon: boolean;
   viewport: ViewPort;
+  IsDarkMode: boolean;
 }
 class Map extends React.Component<IMapProps, IMapState> {
   interval: any;
@@ -36,6 +37,7 @@ class Map extends React.Component<IMapProps, IMapState> {
         zoom: 4,
       },
       lockedon: false,
+      IsDarkMode: IsDarkMode(),
     };
     this.updateViewPort = this.updateViewPort.bind(this);
     this.HandleCheckBox = this.HandleCheckBox.bind(this);
@@ -60,8 +62,8 @@ class Map extends React.Component<IMapProps, IMapState> {
   }
 
   render() {
-    const { viewport, lockedon, lat, lon, connected } = this.state;
-    const { Lat, Lon, Direction, IsDarkMode } = this.props;
+    const { viewport, lockedon, lat, lon, connected, IsDarkMode } = this.state;
+    const { Lat, Lon, Direction } = this.props;
     return (
       <>
         <ReactMapGL

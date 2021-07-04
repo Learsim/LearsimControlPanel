@@ -251,6 +251,7 @@
   },
   "dependencies": {
     "@types/axios": "^0.14.0",
+    "@types/multicast-dns": "^7.2.0",
     "@types/react-syntax-highlighter": "^13.5.0",
     "@types/uuid": "^8.3.0",
     "autoprefixer": "^10.2.6",
@@ -259,6 +260,7 @@
     "electron-log": "^4.2.4",
     "electron-updater": "^4.3.4",
     "history": "^5.0.0",
+    "multicast-dns": "^7.2.3",
     "postcss": "^8.3.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

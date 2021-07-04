@@ -32,9 +32,10 @@ export default class AirCraft extends React.Component<IAirCraftProps> {
       <div className="max-h-full max-w-full overflow-hidden p-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1590 840"
-          className="h-full max-h-full overflow-hidden "
-          preserveAspectRatio="none"
+          viewBox="0 25 1590 840"
+          width="100%"
+          height="100%"
+          className="h-90 w-90 "
         >
           <defs>
             <linearGradient
@@ -83,19 +84,23 @@ export default class AirCraft extends React.Component<IAirCraftProps> {
               id="Layer_5"
               data-name="Layer 5"
               style={{
-                clipPath: `polygon(0% 0%, 100% 0%, 100% ${RFuel}%, 0% ${RFuel}%)`,
+                clipPath: `polygon(0% ${100 - RFuel}%, 100% ${
+                  100 - RFuel
+                }%, 100% 100%, 0% 100%)`,
               }}
             >
               <path
                 className="cls-1"
-                d="M327.33,564.67s9.89-4.78,14.78-4.89S357,564.67,357,564.67l-2,73-4.14,16-7.09,3L334.44,655l-3.35-4.35-3.76-17-1.83-20.1.49-24Z"
+                d="M327.33,564.67s9.89-4.78,14.78-4.89S357,564.67,357,564.67l-2,73-4.14,16-7.09,3L334.44,655l-3.35-4.35-3.76-17-1.83-20.1.49-24Z "
               />
             </g>
             <g
               id="Layer_6"
               data-name="Layer 6"
               style={{
-                clipPath: `polygon(0% 0%, 100% 0%, 100% ${LFuel}%, 0% ${LFuel}%)`,
+                clipPath: `polygon(0% ${100 - LFuel}%, 100% ${
+                  100 - LFuel
+                }%, 100% 100%, 0% 100%)`,
               }}
             >
               <path
@@ -103,6 +108,26 @@ export default class AirCraft extends React.Component<IAirCraftProps> {
                 d="M246.92,565.16s-9.89-4.78-14.78-4.89-14.89,4.89-14.89,4.89l2,73,4.14,16,7.09,3,9.33-1.68,3.35-4.36,3.76-17,1.83-20.1-.49-24Z"
               />
             </g>
+            <text
+              className="fill-current text-black dark:text-white"
+              transform="translate(340 600)"
+              textAnchor="middle"
+              fontSize="x-small"
+              fontFamily="monospace"
+              fontWeight="bold"
+            >
+              {RFuel}%
+            </text>
+            <text
+              className="fill-current text-black dark:text-white"
+              transform="translate(232 600)"
+              textAnchor="middle"
+              fontSize="x-small"
+              fontFamily="monospace"
+              fontWeight="bold"
+            >
+              {LFuel}%
+            </text>
             <g id="Layer_4" data-name="Layer 4">
               <polygon
                 className="cls-2"
@@ -124,21 +149,21 @@ export default class AirCraft extends React.Component<IAirCraftProps> {
             </g>
             <g id="Layer_2-2" data-name="Layer 2">
               <path
-                className="cls-6"
+                className="cls-6 dark:text-white text-black stroke-current"
                 d="M564,591.67c-3-1-22-23-22-23l-5-14s-2-8-7-10-213-66-213-66v-159s-7.5-101.5-30-124c-22.5,22.5-30,124-30,124v159s-208,64-213,66-7,10-7,10l-5,14s-19,22-22,23,1,8,1,8,21-13,36-14,170-5,170-5,1,61,5,71,21,2,21,2l2,11h20.89l4.11,29-9,48v22l-68,39v23l90-16h1v9s0,5.5,3,5.5,3-5.5,3-5.5v-9h1l90,16v-23l-68-39v-22l-9-48,4.11-29H329l2-11s17,8,21-2,5-71,5-71,155,4,170,5,36,14,36,14S567,592.67,564,591.67Z"
               />
               <path
-                className="cls-6"
+                className="cls-6  stroke-current dark:text-white text-black"
                 d="M217,580.67v-16s12.33-11,29.67,0c.33,23,6.33,54-4.67,89"
               />
               <path
-                className="cls-6"
+                className="cls-6  stroke-current dark:text-white text-black"
                 d="M332,653.67c-11-35-5-66-4.67-89,17.34-11,29.67,0,29.67,0v16"
               />
             </g>
             <g id="Layer_3" data-name="Layer 3">
               <path
-                className="cls-6"
+                className="cls-6 dark:text-white text-black stroke-current	"
                 d="M706,409.67h72c38,21,27,72,102,66l7,7h14.89s55.11-9,83.11,0c0,0,257,8,270,8s18,7,18,7l27,18s68,20,77,33-129,8-256,5c0,0-26.58,4.77-79.29,4.89S935,550.67,831,518.67l-31,1-49-2L754.33,501,749,490.67s-2-4,4-4c0,0-23-53-35-65l-12-3.11Z"
               />
             </g>
