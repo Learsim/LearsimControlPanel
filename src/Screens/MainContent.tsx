@@ -5,6 +5,7 @@
 import mDNS from 'multicast-dns';
 import React from 'react';
 import getClients, { Client } from '../API/Clients';
+import getNodes from '../API/Nodes';
 import getSimVarValues, { LearVar, SimVarValue } from '../API/SimVarValues';
 import getStatus from '../API/Status';
 import Map from '../Components/Map';
@@ -13,7 +14,7 @@ import SideMenu from '../Components/SideMenu';
 import SimStatusIcon from '../Components/SimStatusIcon';
 import ScreenNames from '../Helpers/enums';
 import { WarningTriangle } from '../Helpers/Icons';
-import { NodeStatus } from '../Helpers/Nodes';
+import { NodeStatus, Node } from '../Helpers/Nodes';
 import AircraftScreen from './AircraftScreen';
 import ClientsScreen from './Clients';
 import ClientScreen from './ClientScreen';
@@ -33,6 +34,7 @@ export interface IMainContentStates {
   SimVars: SimVarValue[];
   LearVars: LearVar[];
   SideMenuExtended: boolean;
+  Nodes: Node[];
 }
 class MainContent extends React.Component<
   IMainContentProps,
@@ -48,6 +50,7 @@ class MainContent extends React.Component<
       ServerStatus: false,
       Clients: [],
       SimVars: [],
+      Nodes: [],
       LearVars: [],
       SideMenuExtended: false,
     };
@@ -85,6 +88,9 @@ class MainContent extends React.Component<
         this.setState({ SimVars: res.SimVars, LearVars: res.LearVars })
       )
       .catch((res) => null);
+    getNodes(URL)
+      .then((res) => this.setState({ Nodes: res }))
+      .catch((res) => null);
   }
 
   NavigationManager(target: ScreenNames) {
@@ -100,6 +106,7 @@ class MainContent extends React.Component<
       SideMenuExtended,
       ServerStatus,
       LearVars,
+      Nodes,
     } = this.state;
     let Content: JSX.Element = <></>;
     switch (CurrentScreen) {
@@ -141,24 +148,7 @@ class MainContent extends React.Component<
 
         break;
       case 8:
-        Content = (
-          <NodesScreen
-            Nodes={[
-              {
-                Name: 'Client 1',
-                IP: '192.168.0.2',
-                Port: 24454,
-                Status: NodeStatus.Offline,
-              },
-              {
-                Name: 'Client 2',
-                IP: '192.168.0.3',
-                Port: 24454,
-                Status: NodeStatus.Online,
-              },
-            ]}
-          />
-        );
+        Content = <NodesScreen Nodes={Nodes} />;
         break;
       case 9:
         let lat = 0.0;
@@ -199,7 +189,7 @@ class MainContent extends React.Component<
           ''
         ) : (
           <div
-            className="h-16 w-80 p-4 rounded-xl fixed z-50 bottom-5 right-5 bg-white drop-shadow-lg text-red-500 flex items-center"
+            className="h-16 w-80 p-4 rounded-xl fixed z-50 bottom-5 right-5 bg-white drop-shadow-lg text-red-500 flex items-center shadow-lg"
             style={{
               animation:
                 '4s ease-in-out 0s infinite normal none running alertAnimation',
@@ -235,8 +225,16 @@ class MainContent extends React.Component<
                 IsExpanded={SideMenuExtended}
                 NavigationManager={this.NavigationManager}
                 CurrentScreen={CurrentScreen}
+                IsConnected={ServerStatus}
               />
-              <div className="flex-grow">{Content}</div>
+              <div className="flex-grow">
+                {ServerStatus || CurrentScreen === ScreenNames.settings ? (
+                  ' '
+                ) : (
+                  <div className="fixed bg-gray-500 h-full w-full opacity-50 z-20 overflow-hidden" />
+                )}
+                {Content}
+              </div>
             </div>
           </div>
         </div>

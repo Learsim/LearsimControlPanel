@@ -1,4 +1,6 @@
+/* eslint-disable class-methods-use-this */
 import * as React from 'react';
+import startSimulator from '../API/API.Common';
 import ScreenNames from '../Helpers/enums';
 
 export interface ISimStatusIconProps {
@@ -21,6 +23,14 @@ class SimStatusIcon extends React.Component<
     };
   }
 
+  TryToStartSim(status: boolean) {
+    if (status) return;
+    const URL = `http://${localStorage.getItem('host') || '127.0.0.1'}:${
+      localStorage.getItem('port') || '8958'
+    }/`;
+    startSimulator(URL);
+  }
+
   public render() {
     const { tooltipvisible } = this.state;
     const { status, NavigationManager } = this.props;
@@ -29,6 +39,8 @@ class SimStatusIcon extends React.Component<
         className="items-center flex flex-row"
         onMouseEnter={() => this.setState({ tooltipvisible: true })}
         onMouseLeave={() => this.setState({ tooltipvisible: false })}
+        onClick={() => this.TryToStartSim(status)}
+        aria-hidden="true"
       >
         <div>
           <div
@@ -41,6 +53,11 @@ class SimStatusIcon extends React.Component<
           >
             {' '}
             Status is {status ? 'Online' : 'Offline'}
+            {status ? (
+              ''
+            ) : (
+              <div className="text-green-500 text-center">Click to Start</div>
+            )}
           </div>
           <svg
             xmlns="http://www.w3.org/2000/svg"

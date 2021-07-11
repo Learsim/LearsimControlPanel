@@ -32,6 +32,7 @@ export default class ClientsScreen extends React.Component<
 
   public render() {
     const { Clients } = this.props;
+    console.log(Clients);
     const fabIcon = (
       <svg
         xmlns="http://www.w3.org/2000/svg"

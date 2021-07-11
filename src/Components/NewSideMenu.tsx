@@ -16,6 +16,7 @@ export interface INewSideMenuProps {
   NavigationManager: (target: ScreenNames) => void;
   CurrentScreen: ScreenNames;
   IsExpanded: boolean;
+  IsConnected: boolean;
 }
 
 export default class NewSideMenu extends React.Component<INewSideMenuProps> {
@@ -31,7 +32,10 @@ export default class NewSideMenu extends React.Component<INewSideMenuProps> {
   }
 
   public render() {
-    const { CurrentScreen, IsExpanded } = this.props;
+    const { CurrentScreen, IsExpanded, IsConnected } = this.props;
+    if (!IsConnected && CurrentScreen !== ScreenNames.settings)
+      this.navigateTo(ScreenNames.settings);
+
     const selectedColor = 'dark:bg-gray-700 bg-gray-200';
     return (
       <div
@@ -49,6 +53,7 @@ export default class NewSideMenu extends React.Component<INewSideMenuProps> {
               Target={ScreenNames.dashboard}
               name="Dashboard"
               icon={DashboardIcon}
+              IsDisabled={!IsConnected}
             />
             <SideMenuItem
               selectedColor={selectedColor}
@@ -58,6 +63,7 @@ export default class NewSideMenu extends React.Component<INewSideMenuProps> {
               Target={ScreenNames.clients}
               name="Clients"
               icon={ClientIcon}
+              IsDisabled={!IsConnected}
             />
             <SideMenuItem
               selectedColor={selectedColor}
@@ -67,6 +73,7 @@ export default class NewSideMenu extends React.Component<INewSideMenuProps> {
               Target={ScreenNames.nodes}
               name="Nodes"
               icon={ServerIcon}
+              IsDisabled={!IsConnected}
             />
             <hr className=" border-gray-500" />
             <SideMenuItem
@@ -77,6 +84,7 @@ export default class NewSideMenu extends React.Component<INewSideMenuProps> {
               Target={ScreenNames.values}
               name="Values"
               icon={ValuesIcon}
+              IsDisabled={!IsConnected}
             />
             <SideMenuItem
               selectedColor={selectedColor}
@@ -86,6 +94,7 @@ export default class NewSideMenu extends React.Component<INewSideMenuProps> {
               Target={ScreenNames.weather}
               name="Conditions"
               icon={WeatherIcon}
+              IsDisabled={!IsConnected}
             />
             <SideMenuItem
               selectedColor={selectedColor}
@@ -95,6 +104,7 @@ export default class NewSideMenu extends React.Component<INewSideMenuProps> {
               Target={ScreenNames.aircraftInfo}
               name="Aircraft"
               icon={PlaneIcon}
+              IsDisabled={!IsConnected}
             />{' '}
             <SideMenuItem
               selectedColor={selectedColor}
@@ -104,6 +114,7 @@ export default class NewSideMenu extends React.Component<INewSideMenuProps> {
               Target={ScreenNames.map}
               name="Map"
               icon={MapIcon}
+              IsDisabled={!IsConnected}
             />{' '}
           </div>
           <SideMenuItem
