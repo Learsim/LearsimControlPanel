@@ -33,8 +33,8 @@ export default class NewSideMenu extends React.Component<INewSideMenuProps> {
 
   public render() {
     const { CurrentScreen, IsExpanded, IsConnected } = this.props;
-    if (!IsConnected && CurrentScreen !== ScreenNames.settings)
-      this.navigateTo(ScreenNames.settings);
+    // if (!IsConnected && CurrentScreen !== ScreenNames.settings)
+    //  this.navigateTo(ScreenNames.settings);
 
     const selectedColor = 'dark:bg-gray-700 bg-gray-200';
     return (

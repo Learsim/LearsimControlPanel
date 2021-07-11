@@ -38,14 +38,13 @@ class SimStatusIcon extends React.Component<
       <div
         className="items-center flex flex-row"
         onMouseEnter={() => this.setState({ tooltipvisible: true })}
-        onMouseLeave={() => this.setState({ tooltipvisible: false })}
-        onClick={() => this.TryToStartSim(status)}
         aria-hidden="true"
       >
         <div>
           <div
+            onMouseLeave={() => this.setState({ tooltipvisible: false })}
             id="tooltip"
-            className={`bg-gray-500 text-white absolute  shadow-lg rounded-md right-16 top-2  px-4 py-4 transition-all duration-1000${
+            className={`bg-gray-500 text-white absolute  shadow-lg rounded-md right-0 mr-16 top-2  px-4 py-4 transition-all duration-1000${
               tooltipvisible
                 ? 'visible opacity-100'
                 : 'hidden opacity-0 pointer-events-none'
@@ -56,7 +55,13 @@ class SimStatusIcon extends React.Component<
             {status ? (
               ''
             ) : (
-              <div className="text-green-500 text-center">Click to Start</div>
+              <div
+                className="text-green-500 text-center cursor-pointer hover:bg-gray-400 rounded-md hover:text-green-800"
+                onClick={() => this.TryToStartSim(status)}
+                aria-hidden="true"
+              >
+                Click to Start
+              </div>
             )}
           </div>
           <svg
