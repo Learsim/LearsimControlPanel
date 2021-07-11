@@ -227,7 +227,7 @@ class MainContent extends React.Component<
                 CurrentScreen={CurrentScreen}
                 IsConnected={ServerStatus}
               />
-              <div className="flex-grow overflow-x-hidden overflow-y-scroll">
+              <div className="flex-grow overflow-x-hidden overflow-y-auto">
                 {ServerStatus || CurrentScreen === ScreenNames.settings ? (
                   ' '
                 ) : (
