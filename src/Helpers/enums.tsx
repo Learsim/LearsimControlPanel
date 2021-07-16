@@ -8,6 +8,7 @@ enum ScreenNames {
   weather,
   aircraftInfo,
   nodes,
-  map
+  map,
+  graph,
 }
 export default ScreenNames;

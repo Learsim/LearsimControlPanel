@@ -35,6 +35,7 @@ export interface ISettingsState {
   hostError: boolean;
   portError: boolean;
   savedSettings: boolean;
+  mapboxToken: string;
 }
 export default class Settings extends React.Component<
   ISettingsProps,
@@ -49,6 +50,7 @@ export default class Settings extends React.Component<
       hostError: false,
       portError: false,
       savedSettings: false,
+      mapboxToken: localStorage.getItem('mapboxToken') || '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.saveSettings = this.saveSettings.bind(this);
@@ -78,18 +80,23 @@ export default class Settings extends React.Component<
         this.setState({ portError: false });
 
         break;
+      case 'mapbox':
+        this.setState({ mapboxToken: e.target.value });
+
+        break;
       default:
         break;
     }
   }
 
   saveSettings() {
-    const { hostError, portError, host, port } = this.state;
+    const { hostError, portError, host, port, mapboxToken } = this.state;
     if (hostError || portError) return;
     this.setState({ savedSettings: true });
     setTimeout(this.closeInfoPane, 3000);
     localStorage.setItem('host', host);
     localStorage.setItem('port', port);
+    localStorage.setItem('mapboxToken', mapboxToken);
   }
 
   closeInfoPane() {
@@ -100,13 +107,21 @@ export default class Settings extends React.Component<
     this.setState({
       host: localStorage.getItem('host') || '127.0.0.1',
       port: localStorage.getItem('port') || '8958',
+      mapboxToken: localStorage.getItem('mapboxToken') || '',
       hostError: false,
       portError: false,
     });
   }
 
   public render() {
-    const { hostError, portError, host, port, savedSettings } = this.state;
+    const {
+      hostError,
+      portError,
+      host,
+      port,
+      savedSettings,
+      mapboxToken,
+    } = this.state;
     return (
       <div>
         <div
@@ -142,6 +157,17 @@ export default class Settings extends React.Component<
                 value={port}
                 onChange={this.handleChange}
                 id="port"
+              />
+            </div>
+            <div className="m-2">
+              <p className="text-sm dark:text-gray-200 text-gray-800">
+                Mapbox Access token
+              </p>
+              <input
+                className={`px-4 py-2 dark:bg-gray-700 dark:text-white dark:border-gray-800 bg-white text-black border-gray-200 border-2 rounded-md `}
+                value={mapboxToken}
+                onChange={this.handleChange}
+                id="mapbox"
               />
             </div>
           </div>

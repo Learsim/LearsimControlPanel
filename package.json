@@ -87,8 +87,8 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate"
+      "owner": "Learsim",
+      "repo": "LearsimControlPanel"
     }
   },
   "repository": {
@@ -252,10 +252,12 @@
   "dependencies": {
     "@types/axios": "^0.14.0",
     "@types/multicast-dns": "^7.2.0",
+    "@types/react-chartjs-2": "^2.5.7",
     "@types/react-syntax-highlighter": "^13.5.0",
     "@types/uuid": "^8.3.0",
     "autoprefixer": "^10.2.6",
     "axios": "^0.21.1",
+    "chart.js": "^3.4.1",
     "electron-debug": "^3.1.0",
     "electron-log": "^4.2.4",
     "electron-updater": "^4.3.4",
@@ -263,6 +265,7 @@
     "multicast-dns": "^7.2.3",
     "postcss": "^8.3.0",
     "react": "^17.0.1",
+    "react-chartjs-2": "^3.0.3",
     "react-dom": "^17.0.1",
     "react-map-gl": "^6.1.15",
     "react-router-dom": "^5.2.0",

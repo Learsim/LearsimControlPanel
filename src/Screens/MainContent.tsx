@@ -19,6 +19,7 @@ import AircraftScreen from './AircraftScreen';
 import ClientsScreen from './Clients';
 import ClientScreen from './ClientScreen';
 import Dashboard from './Dashboard';
+import Graph from './Graph';
 import NewClientScreen from './NewClientScreen';
 import NodesScreen from './NodesScreen';
 import SettingScreen from './SettingsScreen';
@@ -173,7 +174,9 @@ class MainContent extends React.Component<
           </div>
         );
         break;
-
+      case 10:
+        Content = <Graph />;
+        break;
       default:
         Content = (
           <Dashboard

@@ -74,31 +74,35 @@ class Map extends React.Component<IMapProps, IMapState> {
           latitude={lockedon ? lat : viewport.latitude}
           longitude={lockedon ? lon : viewport.longitude}
           onViewportChange={this.updateViewPort}
-          mapboxApiAccessToken="pk.eyJ1IjoiYXhkcmEiLCJhIjoiY2tuMml3YXhzMGxoMzJub3U3M2E5ZWNiMiJ9.q2lb2ipatPphwA8piWyC1w"
+          mapboxApiAccessToken={localStorage.getItem('mapboxToken') || ''}
           mapStyle={
             IsDarkMode
               ? 'mapbox://styles/mapbox/dark-v10'
               : 'mapbox://styles/mapbox/light-v10'
           }
         >
-          <Marker latitude={Lat} longitude={Lon}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              height="24"
-              width="24"
-              transform={`rotate(${Direction * (180 / Math.PI)} 0 0 )`}
-            >
-              <path
-                className={
-                  connected
-                    ? 'text-green-500 fill-current'
-                    : 'fill-current text-red-500'
-                }
-                d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"
-              />
-            </svg>
-          </Marker>
+          {Math.abs(Lat) !== 0 && Math.abs(Lon) !== 0 ? (
+            <Marker latitude={Lat} longitude={Lon}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                height="24"
+                width="24"
+                transform={`rotate(${Direction * (180 / Math.PI)} 0 0 )`}
+              >
+                <path
+                  className={
+                    connected
+                      ? 'text-green-500 fill-current'
+                      : 'fill-current text-red-500'
+                  }
+                  d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"
+                />
+              </svg>
+            </Marker>
+          ) : (
+            ''
+          )}
         </ReactMapGL>
       </>
     );

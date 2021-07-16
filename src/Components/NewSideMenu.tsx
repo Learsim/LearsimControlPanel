@@ -3,6 +3,7 @@ import ScreenNames from '../Helpers/enums';
 import {
   ClientIcon,
   DashboardIcon,
+  GraphIcon,
   MapIcon,
   PlaneIcon,
   ServerIcon,
@@ -105,7 +106,7 @@ export default class NewSideMenu extends React.Component<INewSideMenuProps> {
               name="Aircraft"
               icon={PlaneIcon}
               IsDisabled={!IsConnected}
-            />{' '}
+            />
             <SideMenuItem
               selectedColor={selectedColor}
               NavigationManager={this.navigateTo}
@@ -115,7 +116,17 @@ export default class NewSideMenu extends React.Component<INewSideMenuProps> {
               name="Map"
               icon={MapIcon}
               IsDisabled={!IsConnected}
-            />{' '}
+            />
+            <SideMenuItem
+              selectedColor={selectedColor}
+              NavigationManager={this.navigateTo}
+              IsExpanded={IsExpanded}
+              CurrentScreen={CurrentScreen}
+              Target={ScreenNames.graph}
+              name="Graph"
+              icon={GraphIcon}
+              IsDisabled={!IsConnected}
+            />
           </div>
           <SideMenuItem
             selectedColor={selectedColor}
@@ -125,6 +136,7 @@ export default class NewSideMenu extends React.Component<INewSideMenuProps> {
             Target={ScreenNames.settings}
             name="Settings"
             icon={SettingsIcon}
+            IsDisabled={false}
           />
         </div>
       </div>

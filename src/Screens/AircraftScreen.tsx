@@ -13,6 +13,7 @@ export interface IAircraftValues {
   ATTITUDEBank: number;
   ATTITUDEPitch: number;
 }
+
 export interface IAircraftScreenProps {
   SimVars: SimVarValue[];
 }
@@ -59,6 +60,7 @@ export default class AircraftScreen extends React.Component<
           Pitch={AircraftValues.ATTITUDEPitch}
           Bank={AircraftValues.ATTITUDEBank}
         />
+
         {/* <AirCraft
           RFuel={100}
           LFuel={100}
