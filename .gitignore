@@ -48,5 +48,10 @@ npm-debug.log.*
 *.css.d.ts
 *.sass.d.ts
 *.scss.d.ts
-
 notes.md
+
+
+src/mockapi/Lib
+src/mockapi/Include
+src/mockapi/Scripts
+src/mockapi/pyvenv.cfg
