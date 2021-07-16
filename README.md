@@ -54,6 +54,13 @@ python mockAPI.py
 ```
 
 ## Screenshots
+![image](https://user-images.githubusercontent.com/54435884/125946731-d469f18f-5c27-4928-91f6-71ec0ebdd33b.png)
+![image](https://user-images.githubusercontent.com/54435884/125946760-9902d96a-6ad3-445b-bb60-99e67d02a416.png)
+![image](https://user-images.githubusercontent.com/54435884/125946780-73e835d5-4f31-40ec-a684-c078cb92ec5a.png)
+![image](https://user-images.githubusercontent.com/54435884/125946807-2e9d7870-d906-4483-ae59-86e1226969a7.png)
+![image](https://user-images.githubusercontent.com/54435884/125946845-69313400-759b-4313-bf9d-3843ec821668.png)
+
+
 ## Credits
 
 #### [Electron React Boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
